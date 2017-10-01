@@ -265,15 +265,9 @@ void MainWindow::LeerTemperatura()
 
 }
 
-void MainWindow::on_pushButton_2_clicked()
-{
-
-
-}
-
 void MainWindow::TempSensorInit()
 {
-    connect(&tempLector, SIGNAL(timeout()), this, SLOT(LeerTemperatura());
+    connect(&tempLector, SIGNAL(timeout()), this, SLOT(LeerTemperatura()));
 
     strcpy(path, "/sys/bus/w1/devices");
 
