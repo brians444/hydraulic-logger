@@ -180,10 +180,6 @@ private:
     QTimer generador;
 
 
-    QTimer tempLector;
-    void TempSensorInit();
-    float last_temp;
-
     int h;
 
     void createUI();                                                                      // Populate the controls
@@ -204,6 +200,24 @@ private:
     QSettings setting;
                                                                                           // Open the inside serial port with these parameters
     void openPort(QSerialPortInfo portInfo, int baudRate, QSerialPort::DataBits dataBits, QSerialPort::Parity parity, QSerialPort::StopBits stopBits);
+
+    // Temperatura variables
+
+    QTimer tempLector;
+    float last_temp;
+
+
+
+    DIR *dir;
+    struct dirent *dirent;
+    char dev[16];      // Dev ID
+    char devPath[128]; // Path to device
+    char buf[256];     // Data from device
+    char tmpData[6];   // Temp C * 1000 reported by device
+    char path[20];
+    ssize_t numRead;
+
+    void TempSensorInit();
 };
 
 
