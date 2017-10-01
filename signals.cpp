@@ -78,21 +78,32 @@ QStringList Signals::append(QStringList d, unsigned int cant)
 {
     datos.append(d);
     last_value = d;
+    QStringList valores_pasados = last_update;
     last_update.clear();
     double value;
     #if DEBUG
     qDebug() << "Append filter";
     #endif
-    for(int i = 0; i < cant; i++)
+    for(int i = 0; i < d.size(); i++)
     {
         value = (double)d[i].toDouble()*1.0;
-        value = value * ganancias[i];
-        #if DEBUG
-        qDebug() << "Valor["<<QString::number(i)<<"] : "<<value;
-        #endif
-        value = Filtro(value, i);
-        value = value+offset[i];
-        last_update.append(QString::number(value));
+        if(value < 4095 && value > -1)
+        {
+            value = value * ganancias[i];
+            #if DEBUG
+            qDebug() << "Valor["<<QString::number(i)<<"] : "<<value;
+            #endif
+            value = Filtro(value, i);
+            value = value+offset[i];
+            last_update.append(QString::number(value));
+        }
+        else
+        {
+            #if DEBUG
+            qDebug() << "Valor anterior ya que se excede del deseado;
+            #endif
+            last_update.append((valores_pasados.at(i)));
+        }
     }
     #if DEBUG
     qDebug() << "Lista = "<<last_update;
