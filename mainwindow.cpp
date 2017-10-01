@@ -101,8 +101,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
 {
     if(plotting)
     {
-
-        newData = signal.append(newData, CANALES);
+        QStringList filtrados = signal.append(newData, CANALES);
 
         int dataListSize = newData.size();                                                    // Get size of received list
         dataPointNumber++;                                                                    // Increment data number
@@ -113,12 +112,12 @@ void MainWindow::onNewDataArrived(QStringList newData)
 
         qDebug() <<"Lista "<<newData;
         qDebug() <<"Adding data plot 1";
-        int tmp;
+        double tmp;
         for(int i=0; i < 3; i++)
         {
             if(habilitado[i] == true)
             {
-                tmp = (int)newData[i].toDouble();
+                tmp = (double)newData[i].toDouble();
                 qDebug() <<"Señal["<<i<<"] = "<<tmp;
                 ui->plot->graph(i)->addData(dataPointNumber, tmp);
                 ui->plot->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
@@ -129,7 +128,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
         {
             if(habilitado[i] == true)
             {
-                tmp = (int)newData[i].toDouble();
+                tmp = (double)filtrados[i].toDouble();
                 ui->plot2->graph(i)->addData(dataPointNumber, tmp);
                 ui->plot2->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
             }
