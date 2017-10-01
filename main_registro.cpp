@@ -21,7 +21,7 @@ void MainWindow::on_saveJPGButton_clicked()
     ok = ui->plot2->saveJpg(file2);
     qDebug()<< "Nombre: "+file2+" jpg 2 ="<<ok;
 
-    exportarExcel();
+    signal.exportarExcel(&work);
 
     /*
     QString nombre = QString::number(dataPointNumber) + ".jpg";
@@ -41,41 +41,3 @@ void MainWindow::on_saveJPGButton_clicked()
 }
 /******************************************************************************************************************/
 
-
-/************************** Guardar en Excel ************************
- *      Exportamos los datos en un Excel
- * *******************************************************************/
-void MainWindow::exportarExcel()
-{
-
-    QString fileName = QFileDialog::getSaveFileName((QWidget* )0, "Export Excel", QString(), "*.xlsx");
-    if (QFileInfo(fileName).suffix().isEmpty())
-    {
-        fileName.append(".xlsx");
-    }
-
-    int tmp;
-    xlsx.write(1, 1, "Tiempo");
-
-    for(int i = 0; i < numberOfAxes; i++)
-    {
-        xlsx.write(1, i+2, "Datos "+QString::number(i));
-    }
-
-    int columnas = datos.size()/numberOfAxes;
-    for(int i = 0; i < columnas;  i++)
-    {
-        /************ escribo el tiempo ***********/
-        xlsx.write(i+2, 1, i);
-        for(int j = 0; j < numberOfAxes; j++)
-        {
-            int ub = (i*numberOfAxes)+j;
-
-            qDebug() << "Ubicacion : "<<ub;
-            tmp = datos[ub].toInt();
-            /************** escribo los datos ****************/
-            xlsx.write(i+2, 2+j, tmp);
-        }
-    }
-    xlsx.saveAs(fileName);
-}

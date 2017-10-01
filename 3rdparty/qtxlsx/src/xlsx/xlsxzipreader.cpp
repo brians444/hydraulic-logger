@@ -48,11 +48,13 @@ ZipReader::~ZipReader()
 
 void ZipReader::init()
 {
+    /*************************************************************** COMENTADO POR BRIAN SCHMIDT **************
     QList<QZipReader::FileInfo> allFiles = m_reader->fileInfoList();
     foreach (const QZipReader::FileInfo &fi, allFiles) {
         if (fi.isFile)
             m_filePaths.append(fi.filePath);
     }
+    *******/
 }
 
 bool ZipReader::exists() const

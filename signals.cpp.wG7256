@@ -1,0 +1,124 @@
+#include "signals.h"
+
+Signals::Signals()
+{
+    for(int i = 0; i < 6; i++)
+    {
+        ganancias[i] = 1;
+        filtro[i] = 1;
+        offset[i] = 0;
+        habilitado[i] = 1;
+    }
+    initFilter();
+
+}
+
+void Signals::initFilter()
+{
+    for(int i = 0; i<6; i++)
+    {
+        cte1[m] = 1;
+        cte2[m] = 0;
+        cte2[m] = 0;
+    }
+}
+
+
+double Signals::Filtro(double x, double x_1, double x_2, int m)
+{
+    double tmp;
+    tmp = ( cte1[m]*x ) + ( cte2[m]*x_1 ) + (cte3[m]*x_2);
+    return tmp;
+
+}
+
+void Signals::append(QStringList d, unsigned int cant)
+{
+    datos.append(d);
+    last_value = d;
+    last_update.clear();
+    double value;
+    for(int i = 0; i < cant; i++)
+    {
+        value = d[i].toInt()*1.0;
+        value = value * ganancias[i];
+        value = Filtro(value, x1[i], x2[i], i);
+        value = value+offset[i];
+        d[i] = QString::number(value);
+        last_update.append(d[i]);
+    }
+}
+
+QStringList Signals::lastValueUpdate()
+{
+    return this->last_update;
+}
+
+QStringList Signals::lastValueFiltered()
+{
+    return this->last_filtered;
+}
+
+QStringList Signals::lastValue()
+{
+    return this->last_value;
+}
+
+void Signals::setGain(int n, double g)
+{
+    ganancias[n] = g;
+}
+
+void Signals::setFilter(int n, double g)
+{
+    filtro[n] = g;
+}
+
+void Signals::setUsed(int n, bool g)
+{
+    habilitado[n] = g;
+}
+
+void Signals::setOffset(int n, double g)
+{
+    offset[n] = g;
+}
+
+
+/************************** Guardar en Excel ************************
+ *      Exportamos los datos en un Excel
+ * *******************************************************************/
+void Signals::exportarExcel()
+{
+
+    QString fileName = QFileDialog::getSaveFileName((QWidget* )0, "Export Excel", QString(), "*.xlsx");
+    if (QFileInfo(fileName).suffix().isEmpty())
+    {
+        fileName.append(".xlsx");
+    }
+
+    int tmp;
+    xlsx.write(1, 1, "Tiempo");
+
+    for(int i = 0; i < CANALES; i++)
+    {
+        xlsx.write(1, i+2, "Datos "+QString::number(i));
+    }
+
+    int columnas = this->datos.size()/CANALES;
+    for(int i = 0; i < columnas;  i++)
+    {
+        /************ escribo el tiempo ***********/
+        xlsx.write(i+2, 1, i);
+        for(int j = 0; j < CANALES/2; j++)
+        {
+            int ub = (i*(CANALES/2))+j;
+
+            qDebug() << "Ubicacion : "<<ub;
+            tmp = datos[ub].toInt();
+            /************** escribo los datos ****************/
+            xlsx.write(i+2, 2+j, tmp);
+        }
+    }
+    xlsx.saveAs(fileName);
+}

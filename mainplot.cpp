@@ -7,7 +7,6 @@
 /******************************************************************************************************************/
 void MainWindow::crearGrafico1()
 {
-    ui->plot->clearGraphs();
 
     ui->plot->setNotAntialiasedElements(QCP::aeAll);                                      // used for higher performance (see QCustomPlot real time example)
     QFont font;
@@ -55,7 +54,7 @@ void MainWindow::crearGrafico1()
     for(int i = 0; i < numberOfAxes; i++)
     {
         ui->plot->addGraph();
-        ui->plot->graph(i)->setPen(QPen(Qt::red));
+        ui->plot->graph(i)->setPen(colores[i]);
     }
 
 }
@@ -69,7 +68,7 @@ void MainWindow::crearGrafico2()
 {
     //pl = new QCustomPlot();
     //pl->resize(800,600);
-    ui->plot2->clearGraphs();
+
 
     ui->plot2->setNotAntialiasedElements(QCP::aeAll);                                      // used for higher performance (see QCustomPlot real time example)
     QFont font;
@@ -88,7 +87,7 @@ void MainWindow::crearGrafico2()
     ui->plot2->clearItems();                                                              // Remove everything from the plot
 
     ui->plot2->yAxis->setTickStep(ui->spinYStep->value());                                // Set tick step according to user spin box
-    numberOfAxes2 = ui->comboAxes->currentText().toInt();                                 // Get number of axes from the user combo
+    numberOfAxes2 = ui->comboAxes2->currentText().toInt();                                 // Get number of axes from the user combo
     ui->plot2->yAxis->setRange(ui->spinAxesMin->value(), ui->spinAxesMax->value());       // Set lower and upper plot range
     ui->plot2->xAxis->setRange(0, NUMBER_OF_POINTS);                                      // Set x axis range for specified number of points
 
@@ -113,7 +112,7 @@ void MainWindow::crearGrafico2()
     for(int i = 0; i < numberOfAxes2; i++)
     {
         ui->plot2->addGraph();
-        ui->plot2->graph(i)->setPen(QPen(Qt::red));
+        ui->plot2->graph(i)->setPen(colores[i]);
     }
 
 }

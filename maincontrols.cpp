@@ -11,7 +11,6 @@ void MainWindow::enableControls(bool enable)
     ui->comboParity->setEnabled(enable);
     ui->comboPort->setEnabled(enable);
     ui->comboStop->setEnabled(enable);
-    ui->comboAxes->setEnabled(enable);
 }
 /******************************************************************************************************************/
 
@@ -225,8 +224,6 @@ void MainWindow::on_stopPlotButton_clicked()
         ui->stopPlotButton->setText("Detener grafico");
         serialPort->clear();
         serialPort->flush();
-        crearGrafico1();
-        crearGrafico2();
 
     }
 }
@@ -273,9 +270,6 @@ void MainWindow::createUI()
     ui->comboAxes->addItem("1");                                                          // Populate axes combo box; 3 axes maximum allowed
     ui->comboAxes->addItem("2");
     ui->comboAxes->addItem("3");
-    ui->comboAxes->addItem("4");                                                          // Populate axes combo box; 3 axes maximum allowed
-    ui->comboAxes->addItem("5");
-    ui->comboAxes->addItem("6");
 }
 /******************************************************************************************************************/
 

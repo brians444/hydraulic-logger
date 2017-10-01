@@ -35,17 +35,8 @@
 #include "qcustomplot.h"
 #include <QFileDialog>
 
-// temperatura incs
-#include <stdio.h>
-#include <dirent.h>
-#include <string.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "signals.h"
 
-
-/*************** Excel Writer ************/
-#include "xlsxdocument.h"
 
 #define START_MSG       '$'
 #define END_MSG         ';'
@@ -69,12 +60,7 @@ public:
 
     void CrearGrafico();
 
-
 private slots:
-   //Lectura de temperaturas
-    void LeerTemperatura();
-
-
     void on_comboPort_currentIndexChanged(const QString &arg1);                           // Slot displays message on status bar
     void on_connectButton_clicked();                                                      // Manages connect/disconnect
     void portOpenedSuccess();                                                             // Called when port opens OK
@@ -110,28 +96,38 @@ private slots:
     void on_ganancia2DoubleSpinBox_valueChanged(double arg1);
     void on_ganancia3DoubleSpinBox_valueChanged(double arg1);
     void on_ganancia4DoubleSpinBox_valueChanged(double arg1);
-    void on_ganancia5DoubleSpinBox_valueChanged(double arg1);
-    void on_ganancia6DoubleSpinBox_valueChanged(double arg1);
     void on_filtroCanal1DoubleSpinBox_valueChanged(double arg1);
     void on_filtroCanal2DoubleSpinBox_valueChanged(double arg1);
     void on_filtroCanal3DoubleSpinBox_valueChanged(double arg1);
     void on_filtroCanal4DoubleSpinBox_valueChanged(double arg1);
-    void on_filtroCanal5DoubleSpinBox_valueChanged(double arg1);
-    void on_filtroCanal6DoubleSpinBox_valueChanged(double arg1);
     void on_offset1DoubleSpinBox_valueChanged(double arg1);
     void on_offset2DoubleSpinBox_valueChanged(double arg1);
     void on_offset3DoubleSpinBox_valueChanged(double arg1);
     void on_offset4DoubleSpinBox_valueChanged(double arg1);
-    void on_offset5DoubleSpinBox_valueChanged(double arg1);
-    void on_offset6DoubleSpinBox_valueChanged(double arg1);
-    void on_checkBox_clicked(bool checked);
-    void on_checkBox_2_clicked(bool checked);
-    void on_checkBox_3_clicked(bool checked);
-    void on_checkBox_4_clicked(bool checked);
-    void on_checkBox_5_clicked(bool checked);
-    void on_checkBox_6_clicked(bool checked);
 
-    void on_pushButton_2_clicked();
+    void on_gainCheckBox_clicked(bool checked);
+    void on_filterCheckBox_clicked(bool checked);
+    void on_signal1Check_clicked(bool checked);
+    void on_signal2Check_clicked(bool checked);
+    void on_signal3Check_clicked(bool checked);
+    void on_signal4Check_clicked(bool checked);
+    void on_ordenDeTrabajoSpinBox_valueChanged(int arg1);
+
+    void on_clienteLineEdit_textChanged(const QString &arg1);
+
+    void on_fechaDateEdit_dateChanged(const QDate &date);
+
+    void on_equipoLineEdit_textChanged(const QString &arg1);
+
+    void on_observacionesLineEdit_textChanged(const QString &arg1);
+
+    void on_canal1LineEdit_textChanged(const QString &arg1);
+
+    void on_canal2LineEdit_textChanged(const QString &arg1);
+
+    void on_canal3LineEdit_textChanged(const QString &arg1);
+
+    void on_canal4LineEdit_textChanged(const QString &arg1);
 
 signals:
     void portOpenFail();                                                                  // Emitted when cannot open port
@@ -157,14 +153,16 @@ private:
 
     QCustomPlot *pl;
 
-    QXlsx::Document xlsx;
-    QStringList datos;
+    QPen colores[3];
+
+    bool filtrar, ganancias;
+    bool habilitado[6];
+
 
     void exportarExcel();
     void colourSetup();
 
     QTimer generador;
-    QTimer tempLector;
     int h;
 
     void createUI();                                                                      // Populate the controls
@@ -174,28 +172,17 @@ private:
 
     void crearGraficoDesplegable();
 
-    double ganancias[6];
-    double offset[6];
-    double filtro[6];
-    bool habilitado[6];
+    /******* ORDEN DE TRABAJO *************/
+    WorkOrder work;
+
+    /******* fin Orden de trabajo ********/
+
+    Signals signal;
     void procesarSignals();
 
     QSettings setting;
                                                                                           // Open the inside serial port with these parameters
     void openPort(QSerialPortInfo portInfo, int baudRate, QSerialPort::DataBits dataBits, QSerialPort::Parity parity, QSerialPort::StopBits stopBits);
-
-    // Temperatura variables
-    DIR *dir;
-    struct dirent *dirent;
-    char dev[16];      // Dev ID
-    char devPath[128]; // Path to device
-    char buf[256];     // Data from device
-    char tmpData[6];   // Temp C * 1000 reported by device
-    char path[20];
-    ssize_t numRead;
-
-    void TempSensorInit();
-
 };
 
 

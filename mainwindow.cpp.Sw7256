@@ -45,23 +45,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->plot, SIGNAL(mouseRelease(QMouseEvent*)), this, SLOT(onMouseMoveInPlot(QMouseEvent*)));
 
     h = 0;
-    filtrar = true;
-    ganancias = true;
-
 
     serialPort = NULL;                                                                    // Set serial port pointer to NULL initially
     connect(&updateTimer, SIGNAL(timeout()), this, SLOT(replot()));                       // Connect update timer to replot slot
     ui->saveJPGButton->setEnabled(1);
     ui->comboAxes->setEnabled(1);
-
-    colores[0] = QPen(Qt::red);
-    colores[1] = QPen(Qt::blue);
-    colores[2] = QPen(Qt::green);
-
-    for(int i = 0; i < CANALES; i++)
-    {
-        habilitado[i] = true;
-    }
 }
 /******************************************************************************************************************/
 
@@ -85,9 +73,6 @@ void MainWindow::replot()
     if(connected) {
         ui->plot->xAxis->setRange(dataPointNumber - NUMBER_OF_POINTS, dataPointNumber);
         ui->plot->replot();
-
-        ui->plot2->xAxis->setRange(dataPointNumber - NUMBER_OF_POINTS, dataPointNumber);
-        ui->plot2->replot();
     }
     qDebug() <<"END Replot";
 }
@@ -102,7 +87,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
     if(plotting)
     {
 
-        newData = signal.append(newData, CANALES);
+        signal.append(newData, CANALES);
 
         int dataListSize = newData.size();                                                    // Get size of received list
         dataPointNumber++;                                                                    // Increment data number
@@ -111,28 +96,17 @@ void MainWindow::onNewDataArrived(QStringList newData)
 
         this->procesarSignals();
 
-        qDebug() <<"Lista "<<newData;
-        qDebug() <<"Adding data plot 1";
-        int tmp;
+        newData = this->signal.lastValueUpdate();
+
         for(int i=0; i < 3; i++)
         {
-            if(habilitado[i] == true)
-            {
-                tmp = (int)newData[i].toDouble();
-                qDebug() <<"Señal["<<i<<"] = "<<tmp;
-                ui->plot->graph(i)->addData(dataPointNumber, tmp);
-                ui->plot->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
-            }
+            ui->plot->graph(i)->addData(dataPointNumber, newData[i].toInt());
+            ui->plot->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
         }
-        qDebug() << "Adding data plot 2";
         for(int i=0; i < 3; i++)
         {
-            if(habilitado[i] == true)
-            {
-                tmp = (int)newData[i].toDouble();
-                ui->plot2->graph(i)->addData(dataPointNumber, tmp);
-                ui->plot2->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
-            }
+            ui->plot2->graph(i)->addData(dataPointNumber, newData[i+3].toInt());
+            ui->plot2->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
         }
 
         qDebug() <<"END Data Arrive";
@@ -192,7 +166,7 @@ void MainWindow::generar()
     int d = h*h;
     h++;
     dataPointNumber++;
-    if(h>100)
+    if(h==100)
     {
         h = 0;
     }
@@ -202,8 +176,7 @@ void MainWindow::generar()
         lista.append((QString::number(h*i*10)));
     }
 
-    qDebug() << "Emitiendo "<<lista;
-
+    qDebug() << "Emitiendo";
     emit(newData(lista));
 }
 
@@ -240,4 +213,3 @@ void MainWindow::on_GraficoAleatorio_clicked()
     }
 
 }
-

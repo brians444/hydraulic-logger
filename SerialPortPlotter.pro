@@ -2,6 +2,8 @@
 #
 # Project created by QtCreator 2014-12-22T14:53:33
 #
+# En linux isntala qtbase5-private-dev para que encuentre
+# el include <private/qzipwriter_p.h>
 #-------------------------------------------------
 
 QT       += core gui
@@ -22,11 +24,14 @@ SOURCES += main.cpp\
     mainplot.cpp \
     maincontrols.cpp \
     main_calib.cpp \
-    main_registro.cpp
+    main_registro.cpp \
+    signals.cpp \
+    main_workorder.cpp
 
 HEADERS  += mainwindow.hpp \
     		qcustomplot.h \
-    helpwindow.hpp
+    helpwindow.hpp \
+    signals.h
 
 
 FORMS    += mainwindow.ui \
