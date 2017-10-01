@@ -61,6 +61,9 @@ public:
     void CrearGrafico();
 
 private slots:
+    //Lectura de temperaturas
+     void LeerTemperatura();
+
     void on_comboPort_currentIndexChanged(const QString &arg1);                           // Slot displays message on status bar
     void on_connectButton_clicked();                                                      // Manages connect/disconnect
     void portOpenedSuccess();                                                             // Called when port opens OK
@@ -129,6 +132,10 @@ private slots:
 
     void on_canal4LineEdit_textChanged(const QString &arg1);
 
+    void on_pushButton_3_clicked();
+
+    void on_graficarTempButton_clicked();
+
 signals:
     void portOpenFail();                                                                  // Emitted when cannot open port
     void portOpenOK();                                                                    // Emitted when port is open
@@ -163,6 +170,12 @@ private:
     void colourSetup();
 
     QTimer generador;
+
+
+    QTimer tempLector;
+    void TempSensorInit();
+    float last_temp;
+
     int h;
 
     void createUI();                                                                      // Populate the controls

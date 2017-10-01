@@ -24,7 +24,7 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -73,9 +73,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="graficarTempButton">
             <property name="text">
-             <string>PushButton</string>
+             <string>Graficar Temperatura</string>
             </property>
            </widget>
           </item>
@@ -83,13 +83,6 @@
            <widget class="QPushButton" name="pushButton_3">
             <property name="text">
              <string>PushButton</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="GraficoAleatorio">
-            <property name="text">
-             <string>Aleatorio</string>
             </property>
            </widget>
           </item>
@@ -1386,7 +1379,7 @@
      <x>0</x>
      <y>0</y>
      <width>700</width>
-     <height>27</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelo">
