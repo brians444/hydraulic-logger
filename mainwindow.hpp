@@ -37,6 +37,14 @@
 
 #include "signals.h"
 
+// temperatura incs
+#include <stdio.h>
+#include <dirent.h>
+#include <string.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
+
 
 #define START_MSG       '$'
 #define END_MSG         ';'
