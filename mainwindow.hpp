@@ -140,8 +140,6 @@ private slots:
 
     void on_canal4LineEdit_textChanged(const QString &arg1);
 
-    void on_pushButton_3_clicked();
-
     void on_graficarTempButton_clicked();
 
 signals:
