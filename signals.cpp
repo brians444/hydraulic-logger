@@ -87,13 +87,13 @@ QStringList Signals::append(QStringList d, unsigned int cant)
     for(int i = 0; i < d.size(); i++)
     {
         value = (double)d[i].toDouble()*1.0;
-        if(value < 4095 && value > -1)
+        if(value < 4095 && value >= 0)
         {
-            value = value * ganancias[i];
             #if DEBUG
             qDebug() << "Valor["<<QString::number(i)<<"] : "<<value;
             #endif
             value = Filtro(value, i);
+            value = value*ganancias[i];
             value = value+offset[i];
             last_update.append(QString::number(value));
         }

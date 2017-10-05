@@ -199,6 +199,10 @@ private:
                                                                                           // Open the inside serial port with these parameters
     void openPort(QSerialPortInfo portInfo, int baudRate, QSerialPort::DataBits dataBits, QSerialPort::Parity parity, QSerialPort::StopBits stopBits);
 
+    unsigned int n_promedio;
+    unsigned int promedio_cont;
+    QStringList promediados;
+
     // Temperatura variables
 
     QTimer tempLector;
