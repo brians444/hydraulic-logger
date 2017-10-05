@@ -92,7 +92,7 @@ QStringList Signals::append(QStringList d, unsigned int cant)
             #if DEBUG
             qDebug() << "Valor["<<QString::number(i)<<"] : "<<value;
             #endif
-            //value = Filtro(value, i);
+            value = Filtro(value, i);
             value = value*ganancias[i];
             value = value+offset[i];
             last_update.append(QString::number(value));
