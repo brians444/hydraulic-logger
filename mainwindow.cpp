@@ -109,11 +109,12 @@ void MainWindow::onNewDataArrived(QStringList newData)
     if(plotting)
     {
         int dataListSize = newData.size();
-        for(int i = 0; i < dataListSize; i++)
+        for(int i = 0; i < CANALES; i++)
         {
             promediados[i] = QString::number(newData[i].toLong() + promediados[i].toLong());
         }
         promedio_cont++;
+        qDebug()<<" Promediando = "<<promedio_cont;
 
         if(promedio_cont == n_promedio)
         {
