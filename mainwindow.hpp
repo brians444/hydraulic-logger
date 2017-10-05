@@ -202,6 +202,7 @@ private:
     unsigned int n_promedio;
     unsigned int promedio_cont;
     QStringList promediados;
+    long prom[10];
 
     // Temperatura variables
 

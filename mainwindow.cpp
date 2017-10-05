@@ -109,15 +109,20 @@ void MainWindow::onNewDataArrived(QStringList newData)
     if(plotting)
     {
         int dataListSize = newData.size();
-        for(int i = 0; i < CANALES; i++)
+        for(int i = 0; i < dataListSize; i++)
         {
-            promediados[i] = QString::number(newData[i].toLong() + promediados[i].toLong());
+            prom[i] += newData[i].toLong();
         }
         promedio_cont++;
         qDebug()<<" Promediando = "<<promedio_cont;
 
         if(promedio_cont == n_promedio)
         {
+            promediados.clear();
+            for(int i=0; i< dataListSize; i++)
+            {
+                promediados.append(QString::number(prom[i]));
+            }
             QStringList filtrados = signal.append(promediados, CANALES);
 
             int dataListSize = newData.size();                                                    // Get size of received list
