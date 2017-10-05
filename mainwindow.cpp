@@ -121,6 +121,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
             promediados.clear();
             for(int i=0; i< CANALES; i++)
             {
+                prom[i] = prom[i]/n_promedio;
                 promediados.append(QString::number(prom[i]));
             }
             qDebug()<< "Filtrando";

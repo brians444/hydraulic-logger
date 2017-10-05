@@ -102,7 +102,10 @@ QStringList Signals::append(QStringList d, unsigned int cant)
             #if DEBUG
             qDebug() << "Valor anterior ya que se excede del deseado;
             #endif
-            last_update.append((valores_pasados.at(i)));
+            if(!valores_pasados.isEmpty())
+                last_update.append((valores_pasados.at(i)));
+            else
+                last_update.append(QString::number(value));
         }
     }
     #if DEBUG
