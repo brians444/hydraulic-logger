@@ -119,10 +119,11 @@ void MainWindow::onNewDataArrived(QStringList newData)
         if(promedio_cont == n_promedio)
         {
             promediados.clear();
-            for(int i=0; i< dataListSize; i++)
+            for(int i=0; i< CANALES; i++)
             {
                 promediados.append(QString::number(prom[i]));
             }
+            qDebug()<< "Filtrando";
             QStringList filtrados = signal.append(promediados, CANALES);
 
             int dataListSize = newData.size();                                                    // Get size of received list
