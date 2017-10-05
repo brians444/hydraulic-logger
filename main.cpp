@@ -26,6 +26,14 @@
 
 #include "mainwindow.hpp"
 #include <QApplication>
+#include <QSplashScreen>
+#include <qthread.h>
+
+class I : public QThread
+{
+public:
+    static void sleep(unsigned long secs) { QThread::sleep(secs); }
+};
 
 int main(int argc, char *argv[])
 {
@@ -37,13 +45,18 @@ int main(int argc, char *argv[])
         a.setStyleSheet(file.readAll());
         file.close();
     }*/
-
+    QPixmap pixmap("splash.jpg");
+    QSplashScreen splash(pixmap);
+    splash.show();
     MainWindow w;
     QIcon appIcon(":/Icons/Icons/serial_port_icon.icns");                       // Get the icon for the right corner
     w.setWindowIcon(appIcon);
     w.setWindowTitle("Graficador de Curva de presion");
+
+    I::sleep(5); // splash is shown for 5 seconds
     w.showMaximized();
-    //w.show();
+    splash.finish(&w);
+
 
     return a.exec();
 }

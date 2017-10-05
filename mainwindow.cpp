@@ -117,7 +117,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
 
         if(promedio_cont == n_promedio)
         {
-            QStringList filtrados = signal.append(newData, CANALES);
+            QStringList filtrados = signal.append(promediados, CANALES);
 
             int dataListSize = newData.size();                                                    // Get size of received list
             dataPointNumber++;                                                                    // Increment data number
@@ -126,14 +126,14 @@ void MainWindow::onNewDataArrived(QStringList newData)
 
             this->procesarSignals();
 
-            qDebug() <<"Lista "<<newData;
+            qDebug() <<"Lista "<<promediados;
             qDebug() <<"Adding data plot 1";
             double tmp;
             for(int i=0; i < 3; i++)
             {
                 if(habilitado[i] == true)
                 {
-                    tmp = (double)newData[i].toDouble();
+                    tmp = (double)promediados[i].toDouble();
                     qDebug() <<"Señal["<<i<<"] = "<<tmp;
                     ui->plot->graph(i)->addData(dataPointNumber, tmp);
                     ui->plot->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
