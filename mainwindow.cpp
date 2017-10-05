@@ -160,7 +160,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
             qDebug() <<"END Data Arrive";
 
             promedio_cont = 0;
-            for(int i = 0; i< 8; i++)
+            for(int i = 0; i< promediados.size(); i++)
             {
                 promediados[i] = QString::number(0);
             }
