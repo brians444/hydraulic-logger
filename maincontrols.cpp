@@ -219,7 +219,7 @@ void MainWindow::on_stopPlotButton_clicked()
         plotting = false;
         ui->stopPlotButton->setText("Iniciar grafico");
     } else {                                                                              // Start plotting
-        updateTimer.start();                                                              // Start updating plot timer
+        //updateTimer.start();                                                              // Start updating plot timer
         plotting = true;
         ui->stopPlotButton->setText("Detener grafico");
         serialPort->clear();
