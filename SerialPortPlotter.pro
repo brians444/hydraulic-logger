@@ -26,12 +26,14 @@ SOURCES += main.cpp\
     main_calib.cpp \
     main_registro.cpp \
     signals.cpp \
-    main_workorder.cpp
+    main_workorder.cpp \
+    crc16.cpp
 
 HEADERS  += mainwindow.hpp \
     		qcustomplot.h \
     helpwindow.hpp \
-    signals.h
+    signals.h \
+    crc16.h
 
 
 FORMS    += mainwindow.ui \
