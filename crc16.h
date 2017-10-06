@@ -7,6 +7,14 @@
 
 uint16_t gen_crc16(const uint8_t *data, uint16_t size);
 
+// temperatura incs
+#include <stdio.h>
+#include <dirent.h>
+#include <string.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
+
 class crc16
 {
 public:
