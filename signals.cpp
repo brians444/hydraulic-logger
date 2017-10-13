@@ -44,16 +44,19 @@ double Signals::Filtro(double x, int m)
         x0[m] = x;
 
         y2[m] = y1[m]; y1[m] = y0[m];
+        #if DEBUG
         qDebug() << "Filtro ("<<m<<") :";
         qDebug() << "Entrada = "<<x0[m];
+        #endif
         // y(n)  =  b0.x(n) + b1.x(n-1) + b2.x(n-2) + a1.y(n-1) + a2.y(n-2)
 
 
         y0[m] = ( b0[m]*x0[m] ) + ( b1[m]*x1[m] ) + (b2[m]*x2[m]) - (a1[m]*y1[m]) -(a2[m]*y2[m]) ;
-        qDebug() << "Salida = "<<y0[m];
+
 
 
         #if DEBUG
+        qDebug() << "Salida = "<<y0[m];
         //qDebug() << "Filtro constantes["<<m<<"]: "<<cte1[m]<<", "<<cte2[m]<<", "<<cte3[m];
         //qDebug() << "Valor actual: "<<tmp<< "x-1 = "<< x1[m] <<" x-2= "<<x2[m];
         #endif

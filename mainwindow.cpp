@@ -180,10 +180,10 @@ void MainWindow::onNewDataArrived(QStringList newData)
                 }
                 this->replot();
             }
-            else
-            {
-                qDebug() << "Frame incorrecto : La suma total no coincide";
-            }
+        }
+        else
+        {
+            qDebug() << "Frame incorrecto : La suma total no coincide";
         }
     }
 }
