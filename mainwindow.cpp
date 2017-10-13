@@ -178,12 +178,18 @@ void MainWindow::onNewDataArrived(QStringList newData)
                 {
                     promediados[i] = QString::number(0);
                 }
-                this->replot();
+                //this->replot();
             }
         }
         else
         {
             qDebug() << "Frame incorrecto : La suma total no coincide";
+            promedio_cont = 0;
+            for(int i = 0; i< promediados.size(); i++)
+            {
+                promediados[i] = QString::number(0);
+            }
+
         }
     }
 }
