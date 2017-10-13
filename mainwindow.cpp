@@ -111,7 +111,8 @@ void MainWindow::onNewDataArrived(QStringList newData)
     if(plotting)
     {
         int dataListSize = newData.size();
-        long suma = 0, suma_recv=0;
+        long suma = 0;
+        long suma_recv=0;
         qDebug()<<"Lista = "<<newData;
         suma_recv = newData[dataListSize-1].toLong();
         for(int i = 0; i < dataListSize-1; i++)
@@ -119,7 +120,9 @@ void MainWindow::onNewDataArrived(QStringList newData)
             suma += newData[i].toLong();
             prom[i] += newData[i].toLong();
         }
-        qDebug<<"Suma Recibida ="<<suma_recv<<" Suma calculada ="<<suma;
+
+        qDebug()<<"Suma Recibida "<<suma_recv<<" Suma calculada ="<<suma;
+
         if(suma_recv == suma)
         {
             promedio_cont++;
