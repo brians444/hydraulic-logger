@@ -111,62 +111,73 @@ void MainWindow::onNewDataArrived(QStringList newData)
     if(plotting)
     {
         int dataListSize = newData.size();
-        for(int i = 0; i < dataListSize; i++)
+        uint16_t suma = 0, suma_recv=0;
+        qDebug()<<"Lista = "<<newData;
+        suma_recv = newData[dataListSize-1];
+        for(int i = 0; i < dataListSize-1; i++)
         {
+            suma += newData[i].toLong();
             prom[i] += newData[i].toLong();
         }
-        promedio_cont++;
-        qDebug()<<" Promediando = "<<promedio_cont;
-
-        if(promedio_cont == n_promedio)
+        if(suma_recv == suma)
         {
-            promediados.clear();
-            for(int i=0; i< CANALES; i++)
+            promedio_cont++;
+            qDebug()<<" Promediando = "<<promedio_cont;
+
+            if(promedio_cont == n_promedio)
             {
-                prom[i] = prom[i]/n_promedio;
-                promediados.append(QString::number(prom[i]));
-            }
-            qDebug()<< "Filtrando";
-            QStringList filtrados = signal.append(promediados, CANALES);
-
-            int dataListSize = newData.size();                                                    // Get size of received list
-            dataPointNumber++;                                                                    // Increment data number
-            qDebug() <<"Data Arrive. Tamaño = "<<dataListSize;
-            qDebug() <<"Numero de ejes = "<<numberOfAxes;
-
-            this->procesarSignals();
-
-            qDebug() <<"Lista "<<promediados;
-            qDebug() <<"Adding data plot 1";
-            double tmp;
-            for(int i=0; i < 3; i++)
-            {
-                if(habilitado[i] == true)
+                promediados.clear();
+                for(int i=0; i< CANALES; i++)
                 {
-                    tmp = (double)promediados[i].toDouble();
-                    qDebug() <<"Señal["<<i<<"] = "<<tmp;
-                    ui->plot->graph(i)->addData(dataPointNumber, tmp);
-                    ui->plot->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
+                    prom[i] = prom[i]/n_promedio;
+                    promediados.append(QString::number(prom[i]));
                 }
-            }
-            qDebug() << "Adding data plot 2";
-            for(int i=0; i < 3; i++)
-            {
-                if(habilitado[i] == true)
-                {
-                    tmp = (double)filtrados[i].toDouble();
-                    ui->plot2->graph(i)->addData(dataPointNumber, tmp);
-                    ui->plot2->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
-                }
-            }
-            qDebug() <<"END Data Arrive";
+                qDebug()<< "Filtrando";
+                QStringList filtrados = signal.append(promediados, CANALES);
 
-            promedio_cont = 0;
-            for(int i = 0; i< promediados.size(); i++)
-            {
-                promediados[i] = QString::number(0);
+                int dataListSize = newData.size();                                                    // Get size of received list
+                dataPointNumber++;                                                                    // Increment data number
+                qDebug() <<"Data Arrive. Tamaño = "<<dataListSize;
+                qDebug() <<"Numero de ejes = "<<numberOfAxes;
+
+                this->procesarSignals();
+
+                qDebug() <<"Lista "<<promediados;
+                qDebug() <<"Adding data plot 1";
+                double tmp;
+                for(int i=0; i < 3; i++)
+                {
+                    if(habilitado[i] == true)
+                    {
+                        tmp = (double)promediados[i].toDouble();
+                        qDebug() <<"Señal["<<i<<"] = "<<tmp;
+                        ui->plot->graph(i)->addData(dataPointNumber, tmp);
+                        ui->plot->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
+                    }
+                }
+                qDebug() << "Adding data plot 2";
+                for(int i=0; i < 3; i++)
+                {
+                    if(habilitado[i] == true)
+                    {
+                        tmp = (double)filtrados[i].toDouble();
+                        ui->plot2->graph(i)->addData(dataPointNumber, tmp);
+                        ui->plot2->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
+                    }
+                }
+                qDebug() <<"END Data Arrive";
+
+                promedio_cont = 0;
+                for(int i = 0; i< promediados.size(); i++)
+                {
+                    promediados[i] = QString::number(0);
+                }
+                this->replot();
             }
-            this->replot();
+            else
+            {
+                qDebug() << "Frame incorrecto : La suma total no coincide";
+            }
         }
     }
 }
