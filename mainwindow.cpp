@@ -119,10 +119,11 @@ void MainWindow::onNewDataArrived(QStringList newData)
             suma += newData[i].toLong();
             prom[i] += newData[i].toLong();
         }
+        qDebug<<"Suma Recibida ="<<suma_recv<<" Suma calculada ="<<suma;
         if(suma_recv == suma)
         {
             promedio_cont++;
-            qDebug()<<" Promediando = "<<promedio_cont;
+            //qDebug()<<" Promediando = "<<promedio_cont;
 
             if(promedio_cont == n_promedio)
             {
@@ -132,30 +133,32 @@ void MainWindow::onNewDataArrived(QStringList newData)
                     prom[i] = prom[i]/n_promedio;
                     promediados.append(QString::number(prom[i]));
                 }
-                qDebug()<< "Filtrando";
+                //qDebug()<< "Filtrando";
                 QStringList filtrados = signal.append(promediados, CANALES);
 
                 int dataListSize = newData.size();                                                    // Get size of received list
                 dataPointNumber++;                                                                    // Increment data number
-                qDebug() <<"Data Arrive. Tamaño = "<<dataListSize;
-                qDebug() <<"Numero de ejes = "<<numberOfAxes;
+
 
                 this->procesarSignals();
 
+                /*
+                qDebug() <<"Data Arrive. Tamaño = "<<dataListSize;
+                qDebug() <<"Numero de ejes = "<<numberOfAxes;
                 qDebug() <<"Lista "<<promediados;
-                qDebug() <<"Adding data plot 1";
+                qDebug() <<"Adding data plot 1"; */
                 double tmp;
                 for(int i=0; i < 3; i++)
                 {
                     if(habilitado[i] == true)
                     {
                         tmp = (double)promediados[i].toDouble();
-                        qDebug() <<"Señal["<<i<<"] = "<<tmp;
+                        //qDebug() <<"Señal["<<i<<"] = "<<tmp;
                         ui->plot->graph(i)->addData(dataPointNumber, tmp);
                         ui->plot->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
                     }
                 }
-                qDebug() << "Adding data plot 2";
+                //qDebug() << "Adding data plot 2";
                 for(int i=0; i < 3; i++)
                 {
                     if(habilitado[i] == true)
@@ -165,7 +168,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
                         ui->plot2->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
                     }
                 }
-                qDebug() <<"END Data Arrive";
+                //qDebug() <<"END Data Arrive";
 
                 promedio_cont = 0;
                 for(int i = 0; i< promediados.size(); i++)
