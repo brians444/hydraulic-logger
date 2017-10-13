@@ -178,7 +178,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
                 {
                     promediados[i] = QString::number(0);
                 }
-                //this->replot();
+                this->replot();
             }
         }
         else
