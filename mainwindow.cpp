@@ -111,7 +111,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
     if(plotting)
     {
         int dataListSize = newData.size();
-        uint16_t suma = 0, suma_recv=0;
+        long suma = 0, suma_recv=0;
         qDebug()<<"Lista = "<<newData;
         suma_recv = newData[dataListSize-1].toLong();
         for(int i = 0; i < dataListSize-1; i++)
