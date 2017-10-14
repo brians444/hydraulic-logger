@@ -110,88 +110,41 @@ void MainWindow::onNewDataArrived(QStringList newData)
 {
     if(plotting)
     {
-        int dataListSize = newData.size();
-        long suma = 0;
-        long suma_recv=0;
-        qDebug()<<"Lista = "<<newData;
-        suma_recv = newData[dataListSize-1].toLong();
-        for(int i = 0; i < dataListSize-1; i++)
+        int dataListSize = newData.size();                                                    // Get size of received list
+
+        //qDebug()<< "Filtrando";
+        QStringList filtrados = signal.append(newData, dataListSize-1);
+        dataPointNumber++;                                                                    // Increment data number
+        this->procesarSignals();
+        /*
+        qDebug() <<"Data Arrive. Tamaño = "<<dataListSize;
+        qDebug() <<"Numero de ejes = "<<numberOfAxes;
+        qDebug() <<"Lista "<<promediados;
+        qDebug() <<"Adding data plot 1"; */
+        double tmp;
+        for(int i=0; i < 3; i++)
         {
-            suma += newData[i].toLong();
-            prom[i] += newData[i].toLong();
-        }
-
-        qDebug()<<"Suma Recibida "<<suma_recv<<" Suma calculada ="<<suma;
-
-        if(suma_recv == suma)
-        {
-            promedio_cont++;
-            //qDebug()<<" Promediando = "<<promedio_cont;
-
-            if(promedio_cont == n_promedio)
+            if(habilitado[i] == true)
             {
-                promediados.clear();
-                for(int i=0; i< CANALES; i++)
-                {
-                    prom[i] = prom[i]/n_promedio;
-                    promediados.append(QString::number(prom[i]));
-                }
-                //qDebug()<< "Filtrando";
-                QStringList filtrados = signal.append(promediados, CANALES);
-
-                int dataListSize = newData.size();                                                    // Get size of received list
-                dataPointNumber++;                                                                    // Increment data number
-
-
-                this->procesarSignals();
-
-                /*
-                qDebug() <<"Data Arrive. Tamaño = "<<dataListSize;
-                qDebug() <<"Numero de ejes = "<<numberOfAxes;
-                qDebug() <<"Lista "<<promediados;
-                qDebug() <<"Adding data plot 1"; */
-                double tmp;
-                for(int i=0; i < 3; i++)
-                {
-                    if(habilitado[i] == true)
-                    {
-                        tmp = (double)promediados[i].toDouble();
-                        //qDebug() <<"Señal["<<i<<"] = "<<tmp;
-                        ui->plot->graph(i)->addData(dataPointNumber, tmp);
-                        ui->plot->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
-                    }
-                }
-                //qDebug() << "Adding data plot 2";
-                for(int i=0; i < 3; i++)
-                {
-                    if(habilitado[i] == true)
-                    {
-                        tmp = (double)filtrados[i].toDouble();
-                        ui->plot2->graph(i)->addData(dataPointNumber, tmp);
-                        ui->plot2->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
-                    }
-                }
-                //qDebug() <<"END Data Arrive";
-
-                promedio_cont = 0;
-                for(int i = 0; i< promediados.size(); i++)
-                {
-                    promediados[i] = QString::number(0);
-                }
-                this->replot();
+                tmp = (double)newData[i].toDouble();
+                //qDebug() <<"Señal["<<i<<"] = "<<tmp;
+                ui->plot->graph(i)->addData(dataPointNumber, tmp);
+                ui->plot->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
             }
         }
-        else
+        //qDebug() << "Adding data plot 2";
+        for(int i=0; i < 3; i++)
         {
-            qDebug() << "Frame incorrecto : La suma total no coincide";
-            promedio_cont = 0;
-            for(int i = 0; i< promediados.size(); i++)
+            if(habilitado[i] == true)
             {
-                promediados[i] = QString::number(0);
+                tmp = (double)filtrados[i].toDouble();
+                ui->plot2->graph(i)->addData(dataPointNumber, tmp);
+                ui->plot2->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
             }
-
         }
-    }
+        //qDebug() <<"END Data Arrive";
+        this->replot();
+        }
 }
 /******************************************************************************************************************/
 
@@ -219,7 +172,24 @@ void MainWindow::readData()
                     if(temp[i] == END_MSG) {                                              // If char examined is ;, switch state to END_MSG
                         STATE = WAIT_START;
                         QStringList incomingData = receivedData.split(' ');               // Split string received from port and put it into list
-                        emit newData(incomingData);                                       // Emit signal for data received with the list
+                        int dataListSize = incomingData.size();
+                        long suma = 0;
+                        long suma_recv=0;
+                        qDebug()<<"Lista = "<<incomingData;
+                        suma_recv = incomingData[dataListSize-1].toLong();
+                        for(int i = 0; i < dataListSize-1; i++)
+                        {
+                            suma += incomingData[i].toLong();
+                        }
+                        qDebug()<<"Suma Recibida "<<suma_recv<<" Suma calculada ="<<suma;
+                        if(suma_recv == suma)
+                        {
+                            emit newData(incomingData);                                       // Emit signal for data received with the list
+                        }
+                        else
+                        {
+                            qDebug() << "Frame incorrecto : La suma total no coincide";
+                        }
                         break;
                     }
                     else if(isdigit(temp[i]) || isspace(temp[i]) ) {                      // If examined char is a digit, and not '$' or ';', append it to temporary string
