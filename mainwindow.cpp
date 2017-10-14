@@ -90,7 +90,7 @@ MainWindow::~MainWindow()
 /******************************************************************************************************************/
 void MainWindow::replot()
 {
-    qDebug() <<"Replot";
+    //qDebug() <<"Replot";
     if(connected) {
         ui->plot->xAxis->setRange(dataPointNumber - NUMBER_OF_POINTS, dataPointNumber);
         ui->plot->replot();
@@ -98,7 +98,7 @@ void MainWindow::replot()
         ui->plot2->xAxis->setRange(dataPointNumber - NUMBER_OF_POINTS, dataPointNumber);
         ui->plot2->replot();
     }
-    qDebug() <<"END Replot";
+    //qDebug() <<"END Replot";
 }
 /******************************************************************************************************************/
 
@@ -175,7 +175,7 @@ void MainWindow::readData()
                         int dataListSize = incomingData.size();
                         long suma = 0;
                         long suma_recv=0;
-                        //qDebug()<<"Lista = "<<incomingData;
+                        qDebug()<<"Lista = "<<incomingData;
                         suma_recv = incomingData[dataListSize-1].toLong();
                         for(int i = 0; i < dataListSize-1; i++)
                         {
@@ -184,7 +184,7 @@ void MainWindow::readData()
                         //qDebug()<<"Suma Recibida "<<suma_recv<<" Suma calculada ="<<suma;
                         if(suma_recv == suma)
                         {
-                            emit newData(incomingData);                                       // Emit signal for data received with the list
+                            emit newData(incomingData);         // Emit signal for data received with the list
                         }
                         else
                         {
@@ -192,7 +192,8 @@ void MainWindow::readData()
                         }
                         break;
                     }
-                    else if(isdigit(temp[i]) || isspace(temp[i]) ) {                      // If examined char is a digit, and not '$' or ';', append it to temporary string
+                    else if(isdigit(temp[i]) || isspace(temp[i]) )
+                    {   // If examined char is a digit, and not '$' or ';', append it to temporary string
                         receivedData.append(temp[i]);
                     }
                     break;
@@ -295,27 +296,25 @@ void MainWindow::TempSensorInit()
     connect(&tempLector, SIGNAL(timeout()), this, SLOT(LeerTemperatura()));
 
     strcpy(path, "/sys/bus/w1/devices");
-
-     dir = opendir (path);
-     if (dir != NULL)
-     {
-      while ((dirent = readdir (dir)))
-       // 1-wire devices are links beginning with 28-
-       if (dirent->d_type == DT_LNK &&
-         strstr(dirent->d_name, "28-") != NULL) {
-        strcpy(dev, dirent->d_name);
-        printf("\nDevice: %s\n", dev);
-       }
-            (void) closedir (dir);
-            }
-     else
-     {
-      perror ("Couldn't open the w1 devices directory");
-      return;
-     }
-
-            // Assemble path to OneWire device
-     sprintf(devPath, "%s/%s/w1_slave", path, dev);
+    dir = opendir (path);
+    if (dir != NULL)
+    {
+        while ((dirent = readdir (dir)))
+        // 1-wire devices are links beginning with 28-
+        if (dirent->d_type == DT_LNK && strstr(dirent->d_name, "28-") != NULL)
+        {
+            strcpy(dev, dirent->d_name);
+            printf("\nDevice: %s\n", dev);
+        }
+        closedir (dir);
+    }
+    else
+    {
+        perror ("Couldn't open the w1 devices directory");
+        return;
+    }
+    // Assemble path to OneWire device
+    sprintf(devPath, "%s/%s/w1_slave", path, dev);
 }
 void MainWindow::on_graficarTempButton_clicked()
 {
