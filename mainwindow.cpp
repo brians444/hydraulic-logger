@@ -175,13 +175,13 @@ void MainWindow::readData()
                         int dataListSize = incomingData.size();
                         long suma = 0;
                         long suma_recv=0;
-                        qDebug()<<"Lista = "<<incomingData;
+                        //qDebug()<<"Lista = "<<incomingData;
                         suma_recv = incomingData[dataListSize-1].toLong();
                         for(int i = 0; i < dataListSize-1; i++)
                         {
                             suma += incomingData[i].toLong();
                         }
-                        qDebug()<<"Suma Recibida "<<suma_recv<<" Suma calculada ="<<suma;
+                        //qDebug()<<"Suma Recibida "<<suma_recv<<" Suma calculada ="<<suma;
                         if(suma_recv == suma)
                         {
                             emit newData(incomingData);                                       // Emit signal for data received with the list
