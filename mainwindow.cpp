@@ -127,13 +127,12 @@ void MainWindow::onNewDataArrived(QStringList newData)
         {
             if(habilitado[i] == true)
             {
-                //tmp = (double)newData[i].toDouble();
                 tmp = (double)filtrados[i].toDouble();
+                //tmp = (double)newData[i].toDouble();
                 ui->plot->graph(i)->addData(dataPointNumber, tmp);
                 ui->plot->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
             }
         }
-
         if(dataPointNumber%2 == 0)
         {
             this->replot();
