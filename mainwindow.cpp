@@ -96,9 +96,6 @@ void MainWindow::replot()
     if(connected) {
         ui->plot->xAxis->setRange(dataPointNumber - NUMBER_OF_POINTS, dataPointNumber);
         ui->plot->replot();
-
-        ui->plot2->xAxis->setRange(dataPointNumber - NUMBER_OF_POINTS, dataPointNumber);
-        ui->plot2->replot();
     }
     //qDebug() <<"END Replot";
 }
@@ -291,7 +288,7 @@ void MainWindow::LeerTemperatura()
         qDebug() << "Device: " << dev;
         qDebug() << "Temp:  " << tempC << "C";
         last_temp = tempC;
-        graficarTemp(tempC);
+        graficarTemp(tempC, 0.0);
     }
 //    close(fd);
 
@@ -338,5 +335,8 @@ void MainWindow::graficarTemp(float temp1, float temp2)
 
     ui->plot2->graph(1)->addData(dataPointNumber_temp, temp2);
     ui->plot2->graph(1)->removeDataBefore(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP);
+    ui->plot2->replot();
+
+    ui->plot2->xAxis->setRange(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP, dataPointNumber_temp);
     ui->plot2->replot();
 }
