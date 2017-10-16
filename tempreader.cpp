@@ -17,7 +17,7 @@ void tempReader::setInterval(int ms)
     tempLector.setInterval(ms);
 }
 
-void tempReader::iniciar()
+void tempReader::run()
 {
     tempLector.start();
 }
