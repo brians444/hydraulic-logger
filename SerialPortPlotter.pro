@@ -27,13 +27,15 @@ SOURCES += main.cpp\
     main_registro.cpp \
     signals.cpp \
     main_workorder.cpp \
-    crc16.cpp
+    crc16.cpp \
+    tempreader.cpp
 
 HEADERS  += mainwindow.hpp \
     		qcustomplot.h \
     helpwindow.hpp \
     signals.h \
-    crc16.h
+    crc16.h \
+    tempreader.h
 
 
 FORMS    += mainwindow.ui \

@@ -37,6 +37,7 @@
 
 #include "crc16.h"
 #include "signals.h"
+#include "tempreader.h"
 
 
 
@@ -65,10 +66,7 @@ public:
     void CrearGrafico();
 
 private slots:
-    //Lectura de temperaturas
-     void LeerTemperatura();
-
-     void aboutSlot();
+    void aboutSlot();
     void on_comboPort_currentIndexChanged(const QString &arg1);                           // Slot displays message on status bar
     void on_connectButton_clicked();                                                      // Manages connect/disconnect
     void portOpenedSuccess();                                                             // Called when port opens OK
@@ -139,6 +137,10 @@ private slots:
 
     void on_graficarTempButton_clicked();
 
+public slots:
+    void graficarTemp(float temp1, float temp2);
+    // Slot de graficar temperatura
+
 signals:
     void portOpenFail();                                                                  // Emitted when cannot open port
     void portOpenOK();                                                                    // Emitted when port is open
@@ -189,27 +191,9 @@ private:
     void procesarSignals();
     QSettings setting;
 
-    /*
-    unsigned int n_promedio;
-    unsigned int promedio_cont;
-    QStringList promediados;
-    long prom[10];*/
+    tempReader *task_temp;
 
-    // Temperatura variables
 
-    QTimer tempLector;
-    float last_temp;
-    void TempSensorInit();
-    void graficarTemp(float temp1, float temp2);
-
-    DIR *dir;
-    struct dirent *dirent;
-    char dev[16];      // Dev ID
-    char devPath[128]; // Path to device
-    char buf[256];     // Data from device
-    char tmpData[6];   // Temp C * 1000 reported by device
-    char path[20];
-    ssize_t numRead;
 };
 
 
