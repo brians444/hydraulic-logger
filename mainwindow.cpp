@@ -31,8 +31,10 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    connected(false), plotting(false), dataPointNumber(0), numberOfAxes(1), STATE(WAIT_START)
+    connected(false), plotting(false), numberOfAxes(1), STATE(WAIT_START)
 {
+    dataPointNumber = 0;
+    dataPointNumber_temp = 0;
     NUMBER_OF_POINTS = 500;
     NUMBER_OF_POINTS_TEMP = 500;
     ui->setupUi(this);
