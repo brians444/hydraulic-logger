@@ -52,12 +52,12 @@ MainWindow::MainWindow(QWidget *parent) :
     filtrar = true;
     ganancias = true;
     // Promediado
-    n_promedio = 10;
+    /*n_promedio = 10;
     promedio_cont = 0;
     for(int i = 0; i < CANALES*2; i++)
     {
         promediados.append("");
-    }
+    }*/
 
 
     serialPort = NULL;                                                                    // Set serial port pointer to NULL initially
