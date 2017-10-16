@@ -342,9 +342,6 @@ void MainWindow::graficarTemp(float temp1, float temp2)
     ui->plot2->graph(1)->removeDataBefore(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP);
     ui->plot2->replot();
 
-    if(dataPointNumber_temp%1 == 0)
-    {
-        ui->plot2->xAxis->setRange(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP, dataPointNumber_temp);
-        ui->plot2->replot();
-    }
+    ui->plot2->xAxis->setRange(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP, dataPointNumber_temp);
+    ui->plot2->replot();
 }
