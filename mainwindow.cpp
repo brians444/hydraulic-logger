@@ -147,7 +147,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
             }
         }*/
         //qDebug() <<"END Data Arrive";
-        if(dataPointNumber%10 == 0)
+        if(dataPointNumber%2 == 0)
         {
             this->replot();
         }
@@ -342,7 +342,7 @@ void MainWindow::graficarTemp(float temp1, float temp2)
     ui->plot2->graph(1)->removeDataBefore(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP);
     ui->plot2->replot();
 
-    if(dataPointNumber_temp%10 == 0)
+    if(dataPointNumber_temp%1 == 0)
     {
         ui->plot2->xAxis->setRange(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP, dataPointNumber_temp);
         ui->plot2->replot();
