@@ -228,7 +228,7 @@ void MainWindow::on_resetPlotButton_clicked()
     /******** GRAFICO 2 ********/
     ui->plot2->yAxis->setRange(0, 4095);
     //ui->plot2->xAxis->setRange(dataPointNumber - NUMBER_OF_POINTS, dataPointNumber);
-    ui->plot2->xAxis->setRange(0, NUMBER_OF_POINTS_2);
+    ui->plot2->xAxis->setRange(0, NUMBER_OF_POINTS_TEMP);
     ui->plot2->yAxis->setTickStep(500);
     ui->plot2->replot();
 
