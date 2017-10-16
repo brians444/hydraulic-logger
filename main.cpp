@@ -48,15 +48,20 @@ int main(int argc, char *argv[])
     QPixmap pixmap("splash.jpg");
     QSplashScreen splash(pixmap);
     splash.show();
-    I::sleep(5); // splash is shown for 5 seconds
 
     MainWindow w;
     QIcon appIcon(":/Icons/Icons/serial_port_icon.icns");                       // Get the icon for the right corner
     w.setWindowIcon(appIcon);
     w.setWindowTitle("Graficador de Curva de presion");
 
-    w.showMaximized();
-    splash.finish(&w);
+
+    QTimer::singleShot(2500, splash,SLOT(close())); // Timer
+    QTimer::singleShot(2500,&w,SLOT(show()));
+//    I::sleep(5); // splash is shown for 5 seconds
+
+
+//    w.showMaximized();
+//    splash.finish(&w);
 
 
     return a.exec();
