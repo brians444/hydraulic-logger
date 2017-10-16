@@ -87,7 +87,7 @@ QStringList Signals::append(QStringList d, unsigned int cant)
     #if DEBUG
     qDebug() << "Append filter";
     #endif
-    for(int i = 0; i < d.size(); i++)
+    for(int i = 0; i < cant; i++)
     {
         value = (double)d[i].toDouble()*1.0;
         if(value < 4095 && value >= 0)
