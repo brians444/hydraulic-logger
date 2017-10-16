@@ -167,6 +167,8 @@ private:
     bool filtrar, ganancias;
     bool habilitado[6];
 
+    void graficarTemp(float , float);
+
 
     void exportarExcel();
     void colourSetup();
