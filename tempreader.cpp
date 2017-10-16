@@ -6,6 +6,7 @@ tempReader::tempReader()
     ms_timer = 500;
     tempLector.setInterval(ms_timer);
     //tempLector.start();
+    //QTimer* timer = new QTimer(this);
 
 
 
@@ -20,6 +21,7 @@ void tempReader::setInterval(int ms)
 void tempReader::run()
 {
     tempLector.start();
+    exec();
 }
 
 void tempReader::LeerTemperatura()

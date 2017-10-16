@@ -15,7 +15,7 @@
 
 
 
-class tempReader : public QObject
+class tempReader : public QThread
 {
     Q_OBJECT
 public:
