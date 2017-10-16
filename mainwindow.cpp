@@ -328,7 +328,7 @@ void MainWindow::on_graficarTempButton_clicked()
     tempLector.start();
 }
 
-void MainWindow::graficarTemp(float temp1 = 0.0, float temp2 = 0.0)
+void MainWindow::graficarTemp(float temp1, float temp2)
 {
     dataPointNumber_temp++;
     ui->plot2->graph(0)->addData(dataPointNumber_temp, temp1);
