@@ -1,6 +1,11 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
+void MainWindow::aboutSlot()
+{
+
+}
+
 void MainWindow::on_ordenDeTrabajoSpinBox_valueChanged(int arg1)
 {
     work.ordenTrabajo = QString::number(arg1);
