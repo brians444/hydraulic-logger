@@ -64,6 +64,8 @@ public:
     ~MainWindow();
 
     void CrearGrafico();
+    void graficarTemp(float temp1, float temp2);
+    // Slot de graficar temperatura
 
 private slots:
     void aboutSlot();
@@ -138,8 +140,7 @@ private slots:
     void on_graficarTempButton_clicked();
 
 public slots:
-    void graficarTemp(float temp1, float temp2);
-    // Slot de graficar temperatura
+
 
 signals:
     void portOpenFail();                                                                  // Emitted when cannot open port
