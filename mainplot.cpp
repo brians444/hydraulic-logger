@@ -86,9 +86,9 @@ void MainWindow::crearGrafico2()
     ui->plot2->setInteraction(QCP::iRangeZoom, true);
     ui->plot2->clearItems();                                                              // Remove everything from the plot
 
-    ui->plot2->yAxis->setTickStep(ui->spinYStep->value());                                // Set tick step according to user spin box
+    ui->plot2->yAxis->setTickStep(ui->spinYStep2->value());                                // Set tick step according to user spin box
     numberOfAxes2 = ui->comboAxes2->currentText().toInt();                                 // Get number of axes from the user combo
-    ui->plot2->yAxis->setRange(ui->spinAxesMin->value(), ui->spinAxesMax->value());       // Set lower and upper plot range
+    ui->plot2->yAxis->setRange(ui->spinAxesMin2->value(), ui->spinAxesMax2->value());       // Set lower and upper plot range
     ui->plot2->xAxis->setRange(0, NUMBER_OF_POINTS_TEMP);                                      // Set x axis range for specified number of points
 
     /**************************************+
