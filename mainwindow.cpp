@@ -336,4 +336,5 @@ void MainWindow::graficarTemp(float temp1, float temp2)
 
     ui->plot2->graph(1)->addData(dataPointNumber_temp, temp2);
     ui->plot2->graph(1)->removeDataBefore(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP);
+    ui->plot2->replot();
 }
