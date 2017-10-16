@@ -178,7 +178,7 @@ void MainWindow::readData()
                         int dataListSize = incomingData.size();
                         long suma = 0;
                         long suma_recv=0;
-                        qDebug()<<"Lista = "<<incomingData;
+                        //qDebug()<<"Lista = "<<incomingData;
                         suma_recv = incomingData[dataListSize-1].toLong();
                         for(int i = 0; i < dataListSize-1; i++)
                         {
