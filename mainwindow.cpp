@@ -127,7 +127,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
         {
             if(habilitado[i] == true)
             {
-                if(filtrar)
+                //if(filtrar)
                 //tmp = (double)newData[i].toDouble();
                 tmp = (double)filtrados[i].toDouble();
                 //qDebug() <<"Señal["<<i<<"] = "<<tmp;
@@ -147,7 +147,10 @@ void MainWindow::onNewDataArrived(QStringList newData)
             }
         }*/
         //qDebug() <<"END Data Arrive";
-        this->replot();
+        if(dataPointNumber%10 == 0)
+        {
+            this->replot();
+        }
         }
 }
 /******************************************************************************************************************/
@@ -339,6 +342,9 @@ void MainWindow::graficarTemp(float temp1, float temp2)
     ui->plot2->graph(1)->removeDataBefore(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP);
     ui->plot2->replot();
 
-    ui->plot2->xAxis->setRange(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP, dataPointNumber_temp);
-    ui->plot2->replot();
+    if(dataPointNumber_temp%10 == 0)
+    {
+        ui->plot2->xAxis->setRange(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP, dataPointNumber_temp);
+        ui->plot2->replot();
+    }
 }
