@@ -111,12 +111,12 @@ void MainWindow::onNewDataArrived(QStringList newData)
 {
     if(plotting)
     {
-        int dataListSize = newData.size();                                                    // Get size of received list
-
-        //qDebug()<< "Filtrando";
+        dataPointNumber++;                      // Increment data number
+        int dataListSize = newData.size();      // Get size of received list
         QStringList filtrados = signal.append(newData, dataListSize-1);
-        dataPointNumber++;                                                                    // Increment data number
         this->procesarSignals();
+        qDebug() <<"Lista filtrada"<<filtrados;
+        qDebug() <<"Lista sin filtro"<<newData;
         /*
         qDebug() <<"Data Arrive. Tamaño = "<<dataListSize;
         qDebug() <<"Numero de ejes = "<<numberOfAxes;
@@ -127,31 +127,19 @@ void MainWindow::onNewDataArrived(QStringList newData)
         {
             if(habilitado[i] == true)
             {
-                //if(filtrar)
                 //tmp = (double)newData[i].toDouble();
                 tmp = (double)filtrados[i].toDouble();
-                //qDebug() <<"Señal["<<i<<"] = "<<tmp;
                 ui->plot->graph(i)->addData(dataPointNumber, tmp);
                 ui->plot->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
             }
         }
-        //qDebug() << "Adding data plot 2";
-        // Plot 2 agregamos las temperaturas
-        /*for(int i=0; i < 4; i++)
-        {
-            if(habilitado[i] == true)
-            {
-                tmp = (double)filtrados[i].toDouble();
-                ui->plot2->graph(i)->addData(dataPointNumber, tmp);
-                ui->plot2->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
-            }
-        }*/
-        //qDebug() <<"END Data Arrive";
+
         if(dataPointNumber%2 == 0)
         {
             this->replot();
         }
-        }
+
+    }
 }
 /******************************************************************************************************************/
 
