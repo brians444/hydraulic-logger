@@ -139,6 +139,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
         if(dataPointNumber%2 == 0)
         {
             this->replot();
+            ui->p1_label->setText(QString::number(filtrados[0].toDouble())+" bar");
         }
 
     }
@@ -291,6 +292,8 @@ void MainWindow::LeerTemperatura()
 
 void MainWindow::TempSensorInit()
 {
+    ui->t1_label->setText("");
+    ui->t2_label->setText("");
     connect(&tempLector, SIGNAL(timeout()), this, SLOT(LeerTemperatura()));
 
     strcpy(path, "/sys/bus/w1/devices");
@@ -334,4 +337,6 @@ void MainWindow::graficarTemp(float temp1, float temp2)
 
     ui->plot2->xAxis->setRange(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP, dataPointNumber_temp);
     ui->plot2->replot();
+    ui->t1_label->setText(QString::number(temp1)+" ºC");
+    ui->t2_label->setText(QString::number(temp2)+" ºC");
 }
