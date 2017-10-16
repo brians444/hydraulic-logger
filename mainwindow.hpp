@@ -149,7 +149,7 @@ private:
 
     bool connected;                                                                       // Status connection variable
     bool plotting;                                                                        // Status plotting variable
-    int dataPointNumber;                                                                  // Keep track of data points
+    int dataPointNumber, dataPointNumber_temp;                                                                  // Keep track of data points
     QTimer updateTimer;                                                                   // Timer used for replotting the plot
     int numberOfAxes, numberOfAxes2;                                                                     // Number of axes for the plot
     QTime timeOfFirstData;                                                                // Record the time of the first data point
@@ -157,7 +157,7 @@ private:
     QSerialPort *serialPort;                                                              // Serial port; runs in this thread
     QString receivedData;                                                                 // Used for reading from the port
     int STATE;                                                                            // State of recieiving message from port
-    int NUMBER_OF_POINTS, NUMBER_OF_POINTS_2;                                                                 // Number of points plotted
+    int NUMBER_OF_POINTS, NUMBER_OF_POINTS_TEMP;                                                                 // Number of points plotted
     HelpWindow *helpWindow;
 
     QCustomPlot *pl;

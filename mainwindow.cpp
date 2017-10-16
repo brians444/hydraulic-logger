@@ -122,18 +122,21 @@ void MainWindow::onNewDataArrived(QStringList newData)
         qDebug() <<"Lista "<<promediados;
         qDebug() <<"Adding data plot 1"; */
         double tmp;
-        for(int i=0; i < 3; i++)
+        for(int i=0; i < dataListSize-1; i++)
         {
             if(habilitado[i] == true)
             {
-                tmp = (double)newData[i].toDouble();
+                if(filtrar)
+                //tmp = (double)newData[i].toDouble();
+                tmp = (double)filtrados[i].toDouble();
                 //qDebug() <<"Señal["<<i<<"] = "<<tmp;
                 ui->plot->graph(i)->addData(dataPointNumber, tmp);
                 ui->plot->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
             }
         }
         //qDebug() << "Adding data plot 2";
-        for(int i=0; i < 3; i++)
+        // Plot 2 agregamos las temperaturas
+        /*for(int i=0; i < 4; i++)
         {
             if(habilitado[i] == true)
             {
@@ -141,7 +144,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
                 ui->plot2->graph(i)->addData(dataPointNumber, tmp);
                 ui->plot2->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
             }
-        }
+        }*/
         //qDebug() <<"END Data Arrive";
         this->replot();
         }
@@ -286,8 +289,9 @@ void MainWindow::LeerTemperatura()
         qDebug() << "Device: " << dev;
         qDebug() << "Temp:  " << tempC << "C";
         last_temp = tempC;
+        graficarTemp(tempC);
     }
-    //close(fd);
+//    close(fd);
 
 }
 
@@ -299,6 +303,7 @@ void MainWindow::TempSensorInit()
     dir = opendir (path);
     if (dir != NULL)
     {
+       // #ifdef LINUX
         while ((dirent = readdir (dir)))
         // 1-wire devices are links beginning with 28-
         if (dirent->d_type == DT_LNK && strstr(dirent->d_name, "28-") != NULL)
@@ -307,6 +312,7 @@ void MainWindow::TempSensorInit()
             printf("\nDevice: %s\n", dev);
         }
         closedir (dir);
+     //   #endif
     }
     else
     {
@@ -320,4 +326,14 @@ void MainWindow::on_graficarTempButton_clicked()
 {
     tempLector.setInterval(1000);
     tempLector.start();
+}
+
+void MainWindow::graficarTemp(float temp1, float temp2)
+{
+    dataPointNumber_temp++;
+    ui->plot2->graph(0)->addData(dataPointNumber_temp, temp1);
+    ui->plot2->graph(0)->removeDataBefore(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP);
+
+    ui->plot2->graph(1)->addData(dataPointNumber_temp, temp2);
+    ui->plot2->graph(1)->removeDataBefore(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP);
 }

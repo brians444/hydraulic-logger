@@ -331,8 +331,8 @@ void MainWindow::on_spinYStep2_valueChanged(int arg1)
 
 void MainWindow::on_spinPoints2_valueChanged(int arg1)
 {
-    NUMBER_OF_POINTS_2 = arg1;
-    ui->plot2->xAxis->setRangeUpper(NUMBER_OF_POINTS_2);
+    NUMBER_OF_POINTS_TEMP = arg1;
+    ui->plot2->xAxis->setRangeUpper(NUMBER_OF_POINTS_TEMP);
     ui->plot2->replot();
 }
 

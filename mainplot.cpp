@@ -89,7 +89,7 @@ void MainWindow::crearGrafico2()
     ui->plot2->yAxis->setTickStep(ui->spinYStep->value());                                // Set tick step according to user spin box
     numberOfAxes2 = ui->comboAxes2->currentText().toInt();                                 // Get number of axes from the user combo
     ui->plot2->yAxis->setRange(ui->spinAxesMin->value(), ui->spinAxesMax->value());       // Set lower and upper plot range
-    ui->plot2->xAxis->setRange(0, NUMBER_OF_POINTS);                                      // Set x axis range for specified number of points
+    ui->plot2->xAxis->setRange(0, NUMBER_OF_POINTS_TEMP);                                      // Set x axis range for specified number of points
 
     /**************************************+
     if(numberOfAxes == 1) {                                                               // If 1 axis selected
