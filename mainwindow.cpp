@@ -325,7 +325,7 @@ void MainWindow::TempSensorInit()
 }
 void MainWindow::on_graficarTempButton_clicked()
 {
-    tempLector.setInterval(1000);
+    tempLector.setInterval(500);
     tempLector.start();
 }
 
