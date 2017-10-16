@@ -55,8 +55,8 @@ int main(int argc, char *argv[])
     w.setWindowTitle("Graficador de Curva de presion");
 
 
-    QTimer::singleShot(2500, &splash,SLOT(close())); // Timer
-    QTimer::singleShot(2500,&w,SLOT(show()));
+    QTimer::singleShot(4000, &splash,SLOT(close())); // Timer
+    QTimer::singleShot(2500,&w,SLOT(showMaximized()));
 //    I::sleep(5); // splash is shown for 5 seconds
 
 
