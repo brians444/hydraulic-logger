@@ -294,4 +294,5 @@ void MainWindow::on_graficarTempButton_clicked()
     //tempLector.setInterval(500);
     //tempLector.start();
     task_temp->run();
+    task_temp->start();
 }
