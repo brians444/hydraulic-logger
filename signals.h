@@ -63,6 +63,7 @@ private:
 
 public:
     Signals();
+    ~Signals();
     double Filtro(double x, int i);
 
     QStringList append(QStringList d, unsigned int cant);

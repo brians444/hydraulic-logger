@@ -150,7 +150,6 @@ private:
     bool connected;                                                                       // Status connection variable
     bool plotting;                                                                        // Status plotting variable
     int dataPointNumber, dataPointNumber_temp;                                                                  // Keep track of data points
-    QTimer updateTimer;                                                                   // Timer used for replotting the plot
     int numberOfAxes, numberOfAxes2;                                                                     // Number of axes for the plot
     QTime timeOfFirstData;                                                                // Record the time of the first data point
     double timeBetweenSamples;                                                            // Store time between samples
@@ -159,55 +158,48 @@ private:
     int STATE;                                                                            // State of recieiving message from port
     int NUMBER_OF_POINTS, NUMBER_OF_POINTS_TEMP;                                                                 // Number of points plotted
     HelpWindow *helpWindow;
-
     QCustomPlot *pl;
 
     QPen colores[3];
-
     bool filtrar, ganancias;
     bool habilitado[6];
 
-    void graficarTemp(float temp1, float temp2);
+    QTimer updateTimer;                                                                   // Timer used for replotting the plot
+    QTimer generador;
+    int h;
 
 
     void exportarExcel();
     void colourSetup();
-
-    QTimer generador;
-
-
-    int h;
-
     void createUI();                                                                      // Populate the controls
     void enableControls(bool enable);                                                     // Enable/disable controls
     void crearGrafico1();                                                                     // Setup the QCustomPlot
     void crearGrafico2();                                                                     // Setup the QCustomPlot
-
     void crearGraficoDesplegable();
+    // Open the inside serial port with these parameters
+    void openPort(QSerialPortInfo portInfo, int baudRate, QSerialPort::DataBits dataBits, QSerialPort::Parity parity, QSerialPort::StopBits stopBits);
+
 
     /******* ORDEN DE TRABAJO *************/
     WorkOrder work;
 
     /******* fin Orden de trabajo ********/
-
     Signals signal;
     void procesarSignals();
-
     QSettings setting;
-                                                                                          // Open the inside serial port with these parameters
-    void openPort(QSerialPortInfo portInfo, int baudRate, QSerialPort::DataBits dataBits, QSerialPort::Parity parity, QSerialPort::StopBits stopBits);
 
+    /*
     unsigned int n_promedio;
     unsigned int promedio_cont;
     QStringList promediados;
-    long prom[10];
+    long prom[10];*/
 
     // Temperatura variables
 
     QTimer tempLector;
     float last_temp;
-
-
+    void TempSensorInit();
+    void graficarTemp(float temp1, float temp2);
 
     DIR *dir;
     struct dirent *dirent;
@@ -217,8 +209,6 @@ private:
     char tmpData[6];   // Temp C * 1000 reported by device
     char path[20];
     ssize_t numRead;
-
-    void TempSensorInit();
 };
 
 

@@ -23,6 +23,14 @@ Signals::Signals()
 
 }
 
+Signals::~Signals()
+{
+    this->datos.clear();
+    last_update.clear();
+    last_filtered.clear();
+    last_value.clear();
+}
+
 void Signals::initFilter()
 {
     filter = 1;

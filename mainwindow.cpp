@@ -84,7 +84,10 @@ MainWindow::MainWindow(QWidget *parent) :
 /******************************************************************************************************************/
 MainWindow::~MainWindow()
 {
+    updateTimer.stop();
     if(serialPort != NULL) delete serialPort;
+    ui->plot->clearItems();
+    ui->plot2->clearItems();
     delete ui;
 }
 /******************************************************************************************************************/
