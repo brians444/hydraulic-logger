@@ -98,5 +98,5 @@ void tempReader::TempSensorInit()
 
 void tempReader::stop()
 {
-
+    this->tempLector.stop();
 }
