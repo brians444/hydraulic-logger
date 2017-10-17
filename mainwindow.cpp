@@ -283,13 +283,13 @@ void MainWindow::graficarTemp(float temp1, float temp2)
 {
     qDebug()<<"Graficar temperatura";
     dataPointNumber_temp++;
-    ui->plot2->graph(0)->addData(dataPointNumber_temp, temp1);
-    ui->plot2->graph(0)->removeDataBefore(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP);
+    ui->plot2->graph(0)->addData(dataPointNumber, temp1);
+    ui->plot2->graph(0)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS_TEMP);
 
     ui->plot2->graph(1)->addData(dataPointNumber_temp, temp2);
-    ui->plot2->graph(1)->removeDataBefore(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP);
+    ui->plot2->graph(1)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS_TEMP);
 
-    ui->plot2->xAxis->setRange(dataPointNumber_temp - NUMBER_OF_POINTS_TEMP, dataPointNumber_temp);
+    ui->plot2->xAxis->setRange(dataPointNumber - NUMBER_OF_POINTS_TEMP, dataPointNumber_temp);
     ui->plot2->replot();
     ui->t1_label->setText(QString::number(temp1)+" ºC");
     ui->t2_label->setText(QString::number(temp2)+" ºC");
