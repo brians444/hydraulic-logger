@@ -24,7 +24,7 @@ void tempReader::setInterval(int ms)
 
 void tempReader::run()
 {
-
+    this->start();
     exec();
 }
 

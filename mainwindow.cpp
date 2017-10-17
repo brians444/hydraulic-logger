@@ -48,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
                                                                                           // Slot for printing coordinates
     connect(ui->plot, SIGNAL(mouseRelease(QMouseEvent*)), this, SLOT(onMouseMoveInPlot(QMouseEvent*)));
 
+    plotting_temp = 0;
     h = 0;
     filtrar = true;
     ganancias = true;
