@@ -39,7 +39,7 @@ private:
 
      long ms_timer;
 
-     int fd; // File descriptor
+    // int fd; // File descriptor
 
      DIR *dir;
      struct dirent *dirent;
