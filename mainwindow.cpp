@@ -143,7 +143,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
             this->replot();
             ui->p1_label->setText(QString::number(filtrados[0].toDouble())+" bar");
         }
-        if(dataPointNumber%100 == 0 && plotting_temp) // Grafico temperatura
+        if( plotting_temp) // Grafico temperatura dataPointNumber%100 == 0 &&
         {
             float t1, t2;
             t1 = task_temp->getLastTemp(1);
