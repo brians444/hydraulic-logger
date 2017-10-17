@@ -9,6 +9,9 @@ tempReader::tempReader()
 
     //tempLector.start();
     //QTimer* timer = new QTimer(this);
+    // Read temp continuously
+    // Opening the device's file triggers new reading
+    fd = open(devPath, O_RDONLY);
 
 
 
@@ -22,15 +25,12 @@ void tempReader::setInterval(int ms)
 
 void tempReader::run()
 {
-    this->start();
+    tempLector.start();
     exec();
 }
 
 void tempReader::LeerTemperatura()
 {
-    // Read temp continuously
-    // Opening the device's file triggers new reading
-    int fd = open(devPath, O_RDONLY);
     if(fd == -1)
     {
         perror ("Couldn't open the w1 device.");
