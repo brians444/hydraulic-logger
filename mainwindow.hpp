@@ -64,8 +64,6 @@ public:
     ~MainWindow();
 
     void CrearGrafico();
-    void graficarTemp(float temp1, float temp2);
-    // Slot de graficar temperatura
 
 private slots:
     void aboutSlot();
@@ -140,7 +138,8 @@ private slots:
     void on_graficarTempButton_clicked();
 
 public slots:
-
+    void graficarTemp(float temp1, float temp2);
+    // Slot de graficar temperatura
 
 signals:
     void portOpenFail();                                                                  // Emitted when cannot open port
@@ -153,6 +152,7 @@ private:
 
     bool connected;                                                                       // Status connection variable
     bool plotting;                                                                        // Status plotting variable
+    bool plotting_temp;
     int dataPointNumber, dataPointNumber_temp;                                                                  // Keep track of data points
     int numberOfAxes, numberOfAxes2;                                                                     // Number of axes for the plot
     QTime timeOfFirstData;                                                                // Record the time of the first data point

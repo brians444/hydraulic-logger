@@ -22,6 +22,8 @@ public:
     tempReader();
     void run();
     void setInterval(int ms);
+    float getLastTemp(unsigned int n);
+    void stop();
 
 private slots:
     //Lectura de temperaturas
@@ -32,7 +34,7 @@ signals:
 
 private:
      QTimer tempLector;
-     float last_temp;
+     float last_temp_1, last_temp_2;
      void TempSensorInit();
 
      long ms_timer;

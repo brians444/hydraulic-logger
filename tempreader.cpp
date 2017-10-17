@@ -41,11 +41,26 @@ void tempReader::LeerTemperatura()
         tempC /= 1000.0;
         qDebug() << "Device: " << dev;
         qDebug() << "Temp:  " << tempC << "C";
-        last_temp = tempC;
-        emit plotTemps(tempC, 0.0);
+        last_temp_1 = tempC;
+        last_temp_2 = 0.0;
+        //emit plotTemps(tempC, 0.0);
     }
 //    close(fd);
 
+}
+
+float tempReader::getLastTemp(unsigned int n)
+{
+    if(n == 1)
+    {
+        return last_temp_1;
+    }
+    else if(n== 2)
+    {
+        return last_temp_2;
+    }
+
+    return 0.0;
 }
 
 void tempReader::TempSensorInit()
@@ -74,4 +89,9 @@ void tempReader::TempSensorInit()
     }
     // Assemble path to OneWire device
     sprintf(devPath, "%s/%s/w1_slave", path, dev);
+}
+
+void tempReader::stop()
+{
+
 }

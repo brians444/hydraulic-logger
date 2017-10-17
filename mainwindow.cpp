@@ -79,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->t2_label->setText(" - ºC");
 
     task_temp = new tempReader();
-    connect(task_temp, SIGNAL(plotTemps(float a,float b)), this, SLOT(graficarTemp(float a ,float b)) );
+    //connect(task_temp, SIGNAL(plotTemps(float a,float b)), this, SLOT(graficarTemp(float a ,float b)) );
 }
 /******************************************************************************************************************/
 
@@ -145,6 +145,14 @@ void MainWindow::onNewDataArrived(QStringList newData)
         {
             this->replot();
             ui->p1_label->setText(QString::number(filtrados[0].toDouble())+" bar");
+        }
+        if(dataPointNumber%100 == 0 && plotting_temp) // Grafico temperatura
+        {
+            float t1, t2;
+            t1 = task_temp->getLastTemp(1);
+            t2 = task_temp->getLastTemp(2);
+            this->graficarTemp(t1, t2);
+
         }
 
     }
@@ -270,9 +278,6 @@ void MainWindow::on_GraficoAleatorio_clicked()
 
 }
 
-
-
-
 void MainWindow::graficarTemp(float temp1, float temp2)
 {
     qDebug()<<"Graficar temperatura";
@@ -294,5 +299,15 @@ void MainWindow::on_graficarTempButton_clicked()
     //tempLector.setInterval(500);
     //tempLector.start();
     //task_temp->run();
-    task_temp->start();
+
+    if(plotting_temp == 0)
+    {
+        task_temp->start();
+        plotting_temp = 1;
+    }
+    else if(plotting_temp == 1)
+    {
+        task_temp->stop();
+        plotting_temp = 0;
+    }
 }
