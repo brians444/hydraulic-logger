@@ -5,6 +5,10 @@ tempReader::tempReader()
     TempSensorInit();
     ms_timer = 500;
     tempLector.setInterval(ms_timer);
+    // Read temp continuously
+    // Opening the device's file triggers new reading
+    fd = open(devPath, O_RDONLY);
+
     //tempLector.start();
     //QTimer* timer = new QTimer(this);
 
@@ -20,15 +24,12 @@ void tempReader::setInterval(int ms)
 
 void tempReader::run()
 {
-    tempLector.start();
+
     exec();
 }
 
 void tempReader::LeerTemperatura()
 {
-    // Read temp continuously
-    // Opening the device's file triggers new reading
-    int fd = open(devPath, O_RDONLY);
     if(fd == -1)
     {
         perror ("Couldn't open the w1 device.");
@@ -45,7 +46,6 @@ void tempReader::LeerTemperatura()
         last_temp_2 = 0.0;
         //emit plotTemps(tempC, 0.0);
     }
-//    close(fd);
 
 }
 
