@@ -126,11 +126,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
         this->procesarSignals();
         qDebug() <<"Lista filtrada"<<filtrados;
         qDebug() <<"Lista sin filtro"<<newData;
-        /*
-        qDebug() <<"Data Arrive. Tamaño = "<<dataListSize;
-        qDebug() <<"Numero de ejes = "<<numberOfAxes;
-        qDebug() <<"Lista "<<promediados;
-        qDebug() <<"Adding data plot 1"; */
+
         double tmp;
         for(int i=0; i < dataListSize-1; i++)
         {

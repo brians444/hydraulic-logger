@@ -36,6 +36,10 @@ void tempReader::LeerTemperatura()
         perror ("Couldn't open the w1 device.");
         return;
     }
+    else
+    {
+        lseek(fd, 0, SEEK_SET);
+    }
     if((numRead = read(fd, buf, 256)) > 0)
     {
         strncpy(tmpData, strstr(buf, "t=") + 2, 5);
