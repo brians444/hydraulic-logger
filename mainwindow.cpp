@@ -138,7 +138,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
                 ui->plot->graph(i)->removeDataBefore(dataPointNumber - NUMBER_OF_POINTS);
             }
         }
-        if(dataPointNumber%2 == 0)
+        if(dataPointNumber%1 == 0)
         {
             this->replot();
             ui->p1_label->setText(QString::number(filtrados[0].toDouble())+" bar");
