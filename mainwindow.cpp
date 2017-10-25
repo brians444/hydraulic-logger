@@ -52,14 +52,6 @@ MainWindow::MainWindow(QWidget *parent) :
     h = 0;
     filtrar = true;
     ganancias = true;
-    // Promediado
-    /*n_promedio = 10;
-    promedio_cont = 0;
-    for(int i = 0; i < CANALES*2; i++)
-    {
-        promediados.append("");
-    }*/
-
 
     serialPort = NULL;                                                                    // Set serial port pointer to NULL initially
     connect(&updateTimer, SIGNAL(timeout()), this, SLOT(replot()));                       // Connect update timer to replot slot
@@ -80,6 +72,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->t2_label->setText(" - ºC");
 
     task_temp = new tempReader();
+
+    this->conectar("ttyS0");
     //connect(task_temp, SIGNAL(plotTemps(float a,float b)), this, SLOT(graficarTemp(float a ,float b)) );
 }
 /******************************************************************************************************************/
@@ -313,4 +307,56 @@ void MainWindow::on_graficarTempButton_clicked()
 void MainWindow::on_exportButton_clicked()
 {
     signal.exportarExcel(&work);
+}
+
+void MainWindow::conectar(QString portToConnect)
+{
+    if(connected) {                                                                       // If application is connected, disconnect
+        serialPort->close();                                                              // Close serial port
+        emit portClosed();                                                                // Notify application
+        delete serialPort;                                                                // Delete the pointer
+        serialPort = NULL;                                                                // Assign NULL to dangling pointer
+        ui->connectButton->setText("Conectar");                                            // Change Connect button text, to indicate disconnected
+        ui->statusBar->showMessage("Desconectado!");                                      // Show message in status bar
+        connected = false;                                                                // Set connected status flag to false
+        plotting = false;                                                                 // Not plotting anymore
+        receivedData.clear();                                                             // Clear received string
+        ui->stopPlotButton->setEnabled(false);                                            // Take care of controls
+        ui->saveJPGButton->setEnabled(false);
+        enableControls(true);
+    } else {                                                                              // If application is not connected, connect
+                                                                                          // Get parameters from controls first
+        QSerialPortInfo portInfo(portToConnect);                           // Temporary object, needed to create QSerialPort
+        int baudRate = ui->comboBaud->currentText().toInt();                              // Get baud rate from combo box
+        int dataBitsIndex = ui->comboData->currentIndex();                                // Get index of data bits combo box
+        int parityIndex = ui->comboParity->currentIndex();                                // Get index of parity combo box
+        int stopBitsIndex = ui->comboStop->currentIndex();                                // Get index of stop bits combo box
+        QSerialPort::DataBits dataBits;
+        QSerialPort::Parity parity;
+        QSerialPort::StopBits stopBits;
+
+        if(dataBitsIndex == 0) {                                                          // Set data bits according to the selected index
+            dataBits = QSerialPort::Data8;
+        } else {
+            dataBits = QSerialPort::Data7;
+        }
+
+        if(parityIndex == 0) {                                                            // Set parity according to the selected index
+            parity = QSerialPort::NoParity;
+        } else if(parityIndex == 1) {
+            parity = QSerialPort::OddParity;
+        } else {
+            parity = QSerialPort::EvenParity;
+        }
+
+        if(stopBitsIndex == 0) {                                                          // Set stop bits according to the selected index
+             stopBits = QSerialPort::OneStop;
+        } else {
+            stopBits = QSerialPort::TwoStop;
+        }
+
+        serialPort = new QSerialPort(portInfo, 0);                                        // Use local instance of QSerialPort; does not crash
+        openPort(portInfo, baudRate, dataBits, parity, stopBits);                         // Open serial port and connect its signals
+        serialPort->clear();
+    }
 }

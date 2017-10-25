@@ -174,7 +174,7 @@ private:
     QTimer generador;
     int h;
 
-
+    void conectar(QString portToConnect);
     void exportarExcel();
     void colourSetup();
     void createUI();                                                                      // Populate the controls
