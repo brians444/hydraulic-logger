@@ -106,8 +106,8 @@ QStringList Signals::append(QStringList d, unsigned int cant)
         value = (value)*(3.3/4096.0);
         value = (value-0.592)*(2/3);
 
-        if(value < 4096 && value >= 0)
-        {
+        /*if(value < 4096 && value >= 0)
+        {*/
             #if DEBUG
             qDebug() << "Valor["<<QString::number(i)<<"] : "<<value;
             #endif
@@ -115,8 +115,8 @@ QStringList Signals::append(QStringList d, unsigned int cant)
             value = value*ganancias[i];
             value = value+offset[i];
             last_update.append(QString::number(value));
-        }
-        else
+        //}
+        /*else
         {
             #if DEBUG
             qDebug() << "Valor anterior ya que se excede del deseado;
@@ -125,7 +125,7 @@ QStringList Signals::append(QStringList d, unsigned int cant)
                 last_update.append((valores_pasados.at(i)));
             else
                 last_update.append(QString::number(value));
-        }
+        }*/
     }
     #if DEBUG
     qDebug() << "Lista = "<<last_update;
