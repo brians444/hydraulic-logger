@@ -109,7 +109,7 @@ QStringList Signals::append(QStringList d, unsigned int cant)
          * Como utilizamos una R=150 ohm
         */
         value = (value)*(3.3/4096.0);
-        value = (value-0.592)*(2/3);
+        value = (value-0.592)*(2.0/3.0);
 
         /*if(value < 4096 && value >= 0)
         {*/
@@ -141,9 +141,9 @@ QStringList Signals::append(QStringList d, unsigned int cant)
             datos[i].append("0.0");
         }
     }
-    #if DEBUG
-    qDebug() << "Lista = "<<last_update;
-    #endif
+    //#if DEBUG
+    qDebug() << "Lista a salida de filtro= "<<last_update;
+    //#endif
     return last_update;
 }
 

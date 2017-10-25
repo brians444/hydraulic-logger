@@ -118,7 +118,7 @@ void MainWindow::onNewDataArrived(QStringList newData)
         int dataListSize = newData.size();      // Get size of received list
         QStringList filtrados = signal.append(newData, dataListSize);
         this->procesarSignals();
-        qDebug() <<"Lista filtrada"<<filtrados;
+        //qDebug() <<"Lista filtrada"<<filtrados;
         qDebug() <<"Lista sin filtro"<<newData;
 
         double tmp;
