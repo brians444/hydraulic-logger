@@ -1,5 +1,8 @@
 #include "tempreader.h"
 
+#include <iostream>
+#include <ctime>
+
 unsigned t3, t4;
 
 tempReader::tempReader()
