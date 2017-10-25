@@ -99,7 +99,7 @@ QStringList Signals::append(QStringList d, unsigned int cant)
     #endif
     for(int i = 0; i < cant; i++)
     {
-        value = (double)d[i].toDouble()*1.0;
+        value = (double)d[i].toInt()*1.0;
         /* Conversion de tension a presion
          * Como utilizamos una R=150 ohm
         */
