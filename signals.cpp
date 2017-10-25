@@ -141,9 +141,9 @@ QStringList Signals::append(QStringList d, unsigned int cant)
             datos[i].append("0.0");
         }
     }
-    //#if DEBUG
+    #if DEBUG
     qDebug() << "Lista a salida de filtro= "<<last_update;
-    //#endif
+    #endif
     return last_update;
 }
 
