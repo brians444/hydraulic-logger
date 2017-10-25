@@ -5,6 +5,8 @@
 #define SAMPLERATE 1000
 #define DEFAULTFC 100
 
+#define RES 150
+
 Signals::Signals()
 {
     for(int i = 0; i <  4; i++)
@@ -98,6 +100,12 @@ QStringList Signals::append(QStringList d, unsigned int cant)
     for(int i = 0; i < cant; i++)
     {
         value = (double)d[i].toDouble()*1.0;
+        /* Conversion de tension a presion
+         * Como utilizamos una R=150 ohm
+        */
+        value = (value)*(3.3/4096.0);
+        value = (value-0.592)*(2/3);
+
         if(value < 4095 && value >= 0)
         {
             #if DEBUG
