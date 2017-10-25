@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
         a.setStyleSheet(file.readAll());
         file.close();
     }*/
-    QPixmap pixmap("splash.jpg");
+    QPixmap pixmap("/home/pi/Looging/splash.jpg");
     QSplashScreen splash(pixmap);
     splash.show();
 
