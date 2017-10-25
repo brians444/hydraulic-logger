@@ -126,9 +126,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_3">
+           <widget class="QPushButton" name="exportButton">
             <property name="text">
-             <string>PushButton</string>
+             <string>Exportar Datos</string>
             </property>
            </widget>
           </item>

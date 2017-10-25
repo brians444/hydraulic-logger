@@ -137,6 +137,8 @@ private slots:
 
     void on_graficarTempButton_clicked();
 
+    void on_exportButton_clicked();
+
 public slots:
     void graficarTemp(float temp1, float temp2);
     // Slot de graficar temperatura

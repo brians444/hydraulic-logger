@@ -122,13 +122,13 @@ void MainWindow::onNewDataArrived(QStringList newData)
     {
         dataPointNumber++;                      // Increment data number
         int dataListSize = newData.size();      // Get size of received list
-        QStringList filtrados = signal.append(newData, dataListSize-1);
+        QStringList filtrados = signal.append(newData, dataListSize);
         this->procesarSignals();
         qDebug() <<"Lista filtrada"<<filtrados;
         qDebug() <<"Lista sin filtro"<<newData;
 
         double tmp;
-        for(int i=0; i < dataListSize-1; i++)
+        for(int i=0; i < dataListSize; i++)
         {
             if(habilitado[i] == true)
             {
@@ -192,6 +192,7 @@ void MainWindow::readData()
                         //qDebug()<<"Suma Recibida "<<suma_recv<<" Suma calculada ="<<suma;
                         if(suma_recv == suma)
                         {
+                            incomingData.removeLast();
                             emit newData(incomingData);         // Emit signal for data received with the list
                         }
                         else
@@ -307,4 +308,9 @@ void MainWindow::on_graficarTempButton_clicked()
         task_temp->stop();
         plotting_temp = 0;
     }
+}
+
+void MainWindow::on_exportButton_clicked()
+{
+    signal.exportarExcel(&work);
 }

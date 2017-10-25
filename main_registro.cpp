@@ -8,20 +8,30 @@
 /******************************************************************************************************************/
 void MainWindow::on_saveJPGButton_clicked()
 {
+    QString file2;
     QString fileName = QFileDialog::getSaveFileName((QWidget* )0, "Exportar Grafico", QString(), "*.jpg");
+    file2 = fileName;
     if (QFileInfo(fileName).suffix().isEmpty())
     {
+
+        file2.append("_2.jpg");
         fileName.append(".jpg");
+
     }
-    fileName = QFileInfo(fileName).baseName();
-    QString file2 = fileName.prepend("2_");
+    else
+    {
+        file2.remove(".jpg");
+        file2.append("_2.jpg");
+
+    }
+    //fileName = QFileInfo(fileName).baseName();
 
     bool ok = ui->plot->saveJpg(fileName);
     qDebug()<< "Nombre: "+fileName+" jpg 1 ="<<ok;
     ok = ui->plot2->saveJpg(file2);
     qDebug()<< "Nombre: "+file2+" jpg 2 ="<<ok;
 
-    signal.exportarExcel(&work);
+
 
     /*
     QString nombre = QString::number(dataPointNumber) + ".jpg";
