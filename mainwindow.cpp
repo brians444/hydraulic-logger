@@ -24,6 +24,11 @@
 #include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
+#include <iostream>
+#include <ctime>
+
+unsigned t0, t1;
+
 
 /******************************************************************************************************************/
 /* Constructor */
@@ -112,6 +117,10 @@ void MainWindow::replot()
 /******************************************************************************************************************/
 void MainWindow::onNewDataArrived(QStringList newData)
 {
+    t1=clock();
+    double time = (double(t1-t0)/CLOCKS_PER_SEC);
+    t0 = t1;
+    qDebug()<<"tiempo entre muestras: "<<time;
     if(plotting)
     {
         dataPointNumber++;                      // Increment data number
