@@ -55,9 +55,11 @@ private:
 
 
     QXlsx::Document xlsx;
-    QStringList datos;
+    QStringList datos[CANALES];
     QStringList last_update, last_filtered;
     bool filter;
+
+    long filas;
 
     void initFilter();
 

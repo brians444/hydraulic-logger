@@ -9,6 +9,7 @@
 
 Signals::Signals()
 {
+    filas = 0;
     for(int i = 0; i <  4; i++)
     {
         ganancias[i] = 1;
@@ -89,16 +90,19 @@ void Signals::filterOff()
 
 QStringList Signals::append(QStringList d, unsigned int cant)
 {
-    datos.append(d);
+    //datos.append(d);
     last_value = d;
-    QStringList valores_pasados = last_update;
+    // Incremento contador de filas
+    filas++;
     last_update.clear();
     double value;
     #if DEBUG
     qDebug() << "Append filter";
     #endif
-    for(int i = 0; i < cant; i++)
+    for(int i = 0; i < CANALES; i++)
     {
+        if(i < cant)
+        {
         value = (double)d[i].toInt()*1.0;
         /* Conversion de tension a presion
          * Como utilizamos una R=150 ohm
@@ -108,13 +112,15 @@ QStringList Signals::append(QStringList d, unsigned int cant)
 
         /*if(value < 4096 && value >= 0)
         {*/
-            #if DEBUG
-            qDebug() << "Valor["<<QString::number(i)<<"] : "<<value;
-            #endif
-            value = Filtro(value, i);
-            value = value*ganancias[i];
-            value = value+offset[i];
-            last_update.append(QString::number(value));
+        #if DEBUG
+        qDebug() << "Valor["<<QString::number(i)<<"] : "<<value;
+        #endif
+        value = Filtro(value, i);
+        value = value*ganancias[i];
+        value = value+offset[i];
+        last_update.append(QString::number(value));
+        // Guardo datos para el excel
+        datos[i].append(QString::number(value));
         //}
         /*else
         {
@@ -126,6 +132,13 @@ QStringList Signals::append(QStringList d, unsigned int cant)
             else
                 last_update.append(QString::number(value));
         }*/
+
+        }
+        else
+        {
+            last_update.append(QString::number(0));
+            datos[i].append("0.0");
+        }
     }
     #if DEBUG
     qDebug() << "Lista = "<<last_update;
@@ -259,7 +272,7 @@ void Signals::exportarExcel(WorkOrder *a)
     QXlsx::Worksheet *sheet3 = xlsx.currentWorksheet();
 
 
-    int tmp;
+    float tmp;
     sheet3->write(1, 1, "Tiempo");
 
     for(int i = 0; i < CANALES; i++)
@@ -267,18 +280,18 @@ void Signals::exportarExcel(WorkOrder *a)
         sheet3->write(1, i+2, "Datos "+QString::number(i));
     }
 
-    int columnas = this->datos.size()/CANALES;
-    for(int i = 0; i < columnas;  i++)
+    int columnas = CANALES;
+    for(int i = 0; i < filas;  i++)
     {
         /************ escribo el tiempo ***********/
         sheet3->write(i+2, 1, i);
-        for(int j = 0; j < CANALES/2; j++)
+        for(int j = 0; j < columnas; j++)
         {
-            int ub = (i*(CANALES/2))+j;
+            //int ub = (i*(CANALES/2))+j;
             #if DEBUG
             qDebug() << "Ubicacion : "<<ub;
             #endif
-            tmp = datos[ub].toInt();
+            tmp = datos[j].at(i).toFloat();
             /************** escribo los datos ****************/
             sheet3->write(i+2, 2+j, tmp);
         }
