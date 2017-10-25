@@ -1,5 +1,7 @@
 #include "tempreader.h"
 
+unsigned t3, t4;
+
 tempReader::tempReader()
 {
     TempSensorInit();
@@ -31,6 +33,8 @@ void tempReader::run()
 
 void tempReader::LeerTemperatura()
 {
+    t3=clock();
+    qDebug()<<"Tiempo entre ADS: "<<time;
     if(fd == -1)
     {
         perror ("Couldn't open the w1 device.");
@@ -51,7 +55,9 @@ void tempReader::LeerTemperatura()
         last_temp_2 = 0.0;
         //emit plotTemps(tempC, 0.0);
     }
-
+    t4=clock();
+    double time = (double(t4-t3)/CLOCKS_PER_SEC);
+    qDebug() << "Tiempo adquisicion temperatura";
 }
 
 float tempReader::getLastTemp(unsigned int n)
