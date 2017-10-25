@@ -60,7 +60,7 @@ void tempReader::LeerTemperatura()
     }
     t4=clock();
     double time = (double(t4-t3)/CLOCKS_PER_SEC);
-    qDebug() << "Tiempo adquisicion temperatura";
+    qDebug() << "Tiempo adquisicion temperatura"<<time;
 }
 
 float tempReader::getLastTemp(unsigned int n)
