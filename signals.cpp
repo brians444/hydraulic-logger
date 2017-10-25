@@ -28,7 +28,8 @@ Signals::Signals()
 
 Signals::~Signals()
 {
-    this->datos.clear();
+    for(int i = 0; i < CANALES; i++)
+        datos[i].clear();
     last_update.clear();
     last_filtered.clear();
     last_value.clear();
