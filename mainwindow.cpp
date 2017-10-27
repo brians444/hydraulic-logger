@@ -27,7 +27,7 @@
 #include <iostream>
 #include <ctime>
 
-unsigned t0, t1;
+unsigned long long time0, time1;
 
 
 /******************************************************************************************************************/
@@ -117,10 +117,15 @@ void MainWindow::replot()
 /******************************************************************************************************************/
 void MainWindow::onNewDataArrived(QStringList newData)
 {
-    t1=clock();
-    double time = (double(t1-t0)/CLOCKS_PER_SEC);
-    t0 = t1;
+    /* ****** Se midio el tiempo, si no se grafica se reciben muestras cada 0.0012 segundos
+     *  si se grafica el tiempo sube a 0.033 segundos en promedio
+    */
+    #ifdef MEASURE_TIME
+    time1=clock();
+    double time = (double(time1-time0)/CLOCKS_PER_SEC);
+    time0 = time1;
     qDebug()<<"tiempo entre muestras: "<<time;
+    #endif
     if(plotting)
     {
         dataPointNumber++;                      // Increment data number

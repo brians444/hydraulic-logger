@@ -7,6 +7,8 @@
 #include <QDebug>
 #include <QPicture>
 
+#define MEASURE_TIME 0
+
 /*************** Excel Writer ************/
 #include "xlsxdocument.h"
 #include "xlsxworksheet.h"

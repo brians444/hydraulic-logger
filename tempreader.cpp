@@ -36,7 +36,9 @@ void tempReader::run()
 
 void tempReader::LeerTemperatura()
 {
+#ifdef MEASURE_TIME
     t3=clock();
+#endif
     qDebug()<<"Tiempo entre ADS: "<<time;
     if(fd == -1)
     {
@@ -58,9 +60,12 @@ void tempReader::LeerTemperatura()
         last_temp_2 = 0.0;
         //emit plotTemps(tempC, 0.0);
     }
+    /****** Se midio el tiempo y se encontro que la lectura lleva 0.025 segundos de tiempo.*/
+ #ifdef MEASURE_TIME
     t4=clock();
     double time = (double(t4-t3)/CLOCKS_PER_SEC);
     qDebug() << "Tiempo adquisicion temperatura"<<time;
+#endif
 }
 
 float tempReader::getLastTemp(unsigned int n)
